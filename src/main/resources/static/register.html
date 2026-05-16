@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shift Manager - Register</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+    --ink:#172033;
+    --muted:#687386;
+    --line:#dfe4ea;
+    --bg:#eef2f6;
+    --panel:#ffffff;
+    --accent:#0f766e;
+    --accent-dark:#115e59;
+}
+body{
+    min-height:100vh;
+    display:flex;
+    font-family:"Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(180deg,#f8fafc 0%,var(--bg) 100%);
+    color:var(--ink);
+}
+.left-panel{
+    width:46%;
+    min-height:100vh;
+    padding:52px;
+    background:
+        linear-gradient(135deg,rgba(23,32,51,.96),rgba(15,118,110,.9)),
+        radial-gradient(circle at 80% 15%,rgba(255,255,255,.14),transparent 34%);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+}
+.left-panel::before,.left-panel::after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:50%;
+}
+.left-panel::before{width:340px;height:340px;right:-90px;top:-70px;}
+.left-panel::after{width:230px;height:230px;left:-80px;bottom:70px;}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    position:relative;
+    z-index:1;
+}
+.brand-icon{
+    width:42px;height:42px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.16);
+}
+.brand-icon svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:2;}
+.brand-name{font-size:18px;font-weight:750;letter-spacing:.1px;}
+.left-content{
+    position:relative;
+    z-index:1;
+    max-width:430px;
+}
+.eyebrow{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    color:rgba(255,255,255,.68);
+    font-weight:700;
+    margin-bottom:18px;
+}
+.left-heading{
+    font-size:40px;
+    line-height:1.15;
+    font-weight:760;
+    margin-bottom:18px;
+}
+.left-sub{
+    color:rgba(255,255,255,.72);
+    font-size:15px;
+    line-height:1.75;
+}
+.step-list{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+.account-preview{
+    margin-top:32px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.14);
