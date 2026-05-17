@@ -421,14 +421,8 @@ textarea.form-control{height:auto;}
 .panel.active{display:block;}
 
 @media(max-width:600px){
-    .premium-command{padding:20px;}
-    .premium-command .page-heading{font-size:24px;}
-    .cards{grid-template-columns:1fr;}
-    .card-box{padding:18px;}
-    .table th,.table td{white-space:nowrap;}
-    .d-flex.gap-2{flex-direction:column;}
-    .d-flex.gap-2 .btn-save{width:100%;}
-    .user-pill span{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .main{padding:18px 14px;}
+    .topbar{padding:0 14px;}
 }
 </style>
 </head>
@@ -718,75 +712,72 @@ textarea.form-control{height:auto;}
 
     <!-- ===== SETTINGS ===== -->
     <div class="panel" id="panel-settings">
-        <div class="page-heading" data-i18n="settingsTitle">Settings</div>
-        <div class="page-sub" data-i18n="settingsSub">Manage your account preferences</div>
+        <div class="page-heading">Settings</div>
+        <div class="page-sub">Manage your account preferences</div>
 
         <div class="card-box">
-            <div class="section-title" data-i18n="profileTitle">Profile</div>
+            <div class="section-title">Profile</div>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="usernameLabel">Username</label>
+                    <label class="form-label">Username</label>
                     <input type="text" id="settingUsername" class="form-control" disabled>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="fullNameLabel">Full Name</label>
-                    <input type="text" id="settingFullName" class="form-control" placeholder="Your full name">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="Your full name">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="emailLabel">Email</label>
-                    <input type="email" id="settingEmail" class="form-control" placeholder="your@email.com">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="your@email.com">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="phoneLabel">Phone</label>
-                    <input type="tel" id="settingPhone" class="form-control" placeholder="+84 000 000 000">
-                </div>
-                <div class="col-12">
-                    <button class="btn-save" onclick="saveProfile()" data-i18n="saveProfileBtn">Save Profile</button>
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" placeholder="+84 000 000 000">
                 </div>
             </div>
         </div>
 
         <div class="card-box">
-            <div class="section-title" data-i18n="securityTitle">Security</div>
+            <div class="section-title">Security</div>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="currentPasswordLabel">Current Password</label>
-                    <input type="password" id="currentPassword" class="form-control" placeholder="••••••••">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="newPasswordLabel">New Password</label>
-                    <input type="password" id="newPassword" class="form-control" placeholder="••••••••">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" data-i18n="confirmPasswordLabel">Confirm Password</label>
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••">
                 </div>
                 <div class="col-12">
-                    <button class="btn-save" onclick="changePassword()" data-i18n="changePasswordBtn">Change Password</button>
+                    <button class="btn-save">Save Settings</button>
                 </div>
             </div>
         </div>
 
         <div class="card-box">
-            <div class="section-title" data-i18n="preferencesTitle">Preferences</div>
+            <div class="section-title">Preferences</div>
             <div class="row g-3">
                 <div class="col-12">
-                    <label class="form-label" data-i18n="languageLabel">Language</label>
-                    <select id="languageSelect" class="form-control form-select" onchange="changeLanguage(this.value)">
-                        <option value="en">English</option>
-                        <option value="vi">Tiếng Việt</option>
+                    <label class="form-label">Language</label>
+                    <select class="form-control form-select">
+                        <option>English</option>
+                        <option>Tiếng Việt</option>
                     </select>
                 </div>
                 <div class="col-12">
                     <label class="form-label d-flex align-items-center gap-2">
-                        <input type="checkbox" id="emailNotifications" checked> <span data-i18n="emailNotificationsLabel">Email notifications</span>
+                        <input type="checkbox" checked> Email notifications
                     </label>
                     <label class="form-label d-flex align-items-center gap-2" style="margin-top:8px;">
-                        <input type="checkbox" id="shiftReminders" checked> <span data-i18n="shiftRemindersLabel">Shift reminders</span>
+                        <input type="checkbox" checked> Shift reminders
                     </label>
                 </div>
                 <div class="col-12">
-                    <button class="btn-save" onclick="savePreferences()" data-i18n="savePreferencesBtn">Save Preferences</button>
+                    <button class="btn-save">Save Preferences</button>
                 </div>
             </div>
         </div>
@@ -1397,7 +1388,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     if(mi) mi.addEventListener("keydown",e=>{ if(e.key==="Enter") sendMessage(); });
     updateUnreadDot();
     setInterval(updateUnreadDot, 10000);
-    loadSettings();
 });
 
 /* ── LOGOUT ── */
@@ -1532,416 +1522,6 @@ function buildNotifications(){
         renderNotifications();
     })
     .catch(()=>renderNotifications());
-}
-
-/* ── SETTINGS ── */
-const translations = {
-    en:{
-        settingsTitle:"Settings",
-        settingsSub:"Manage your account preferences",
-        profileTitle:"Profile",
-        usernameLabel:"Username",
-        fullNameLabel:"Full Name",
-        emailLabel:"Email",
-        phoneLabel:"Phone",
-        saveProfileBtn:"Save Profile",
-        securityTitle:"Security",
-        currentPasswordLabel:"Current Password",
-        newPasswordLabel:"New Password",
-        confirmPasswordLabel:"Confirm Password",
-        changePasswordBtn:"Change Password",
-        preferencesTitle:"Preferences",
-        languageLabel:"Language",
-        emailNotificationsLabel:"Email notifications",
-        shiftRemindersLabel:"Shift reminders",
-        savePreferencesBtn:"Save Preferences"
-    },
-    vi:{
-        settingsTitle:"Cài đặt",
-        settingsSub:"Quản lý thông tin tài khoản và tùy chọn của bạn",
-        profileTitle:"Hồ sơ",
-        usernameLabel:"Tên đăng nhập",
-        fullNameLabel:"Họ và tên",
-        emailLabel:"Email",
-        phoneLabel:"Số điện thoại",
-        saveProfileBtn:"Lưu hồ sơ",
-        securityTitle:"Bảo mật",
-        currentPasswordLabel:"Mật khẩu hiện tại",
-        newPasswordLabel:"Mật khẩu mới",
-        confirmPasswordLabel:"Xác nhận mật khẩu",
-        changePasswordBtn:"Đổi mật khẩu",
-        preferencesTitle:"Tùy chọn",
-        languageLabel:"Ngôn ngữ",
-        emailNotificationsLabel:"Thông báo qua email",
-        shiftRemindersLabel:"Nhắc lịch làm việc",
-        savePreferencesBtn:"Lưu tùy chọn"
-    }
-};
-
-function applyLanguage(lang){
-    const dict = translations[lang] || translations.en;
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        if(dict[key]) el.innerText = dict[key];
-    });
-}
-
-function getStoredProfile(){
-    return JSON.parse(localStorage.getItem("profile_" + username) || "{}");
-}
-
-function saveStoredProfile(profile){
-    localStorage.setItem("profile_" + username, JSON.stringify(profile));
-}
-
-function loadSettings(){
-    const profile = getStoredProfile();
-    const prefs = JSON.parse(localStorage.getItem("prefs_" + username) || "{}");
-    const lang = prefs.language || localStorage.getItem("language") || "en";
-
-    document.getElementById("settingFullName").value = profile.fullName || "";
-    document.getElementById("settingEmail").value = profile.email || "";
-    document.getElementById("settingPhone").value = profile.phone || "";
-    document.getElementById("languageSelect").value = lang;
-    document.getElementById("emailNotifications").checked = prefs.emailNotifications !== false;
-    document.getElementById("shiftReminders").checked = prefs.shiftReminders !== false;
-    applyLanguage(lang);
-
-    fetch(`http://localhost:8081/users/profile?username=${encodeURIComponent(username)}`)
-    .then(res=>res.ok ? res.json() : null)
-    .then(data=>{
-        if(!data) return;
-        document.getElementById("settingFullName").value = data.fullName || "";
-        document.getElementById("settingEmail").value = data.email || "";
-        document.getElementById("settingPhone").value = data.phone || "";
-        if(data.language){
-            document.getElementById("languageSelect").value = data.language;
-            applyLanguage(data.language);
-        }
-        document.getElementById("emailNotifications").checked = data.emailNotifications !== false;
-        document.getElementById("shiftReminders").checked = data.shiftReminders !== false;
-    })
-    .catch(()=>{});
-}
-
-function saveProfile(){
-    const profile = {
-        username:username,
-        fullName:document.getElementById("settingFullName").value.trim(),
-        email:document.getElementById("settingEmail").value.trim(),
-        phone:document.getElementById("settingPhone").value.trim()
-    };
-
-    if(profile.email && !profile.email.includes("@")){
-        alert("Please enter a valid email.");
-        return;
-    }
-
-    fetch("http://localhost:8081/users/profile",{
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(profile)
-    })
-    .then(res=>{
-        if(!res.ok) throw new Error("Save profile failed");
-        return res.json();
-    })
-    .then(data=>{
-        saveStoredProfile(data);
-        alert("Profile saved.");
-    })
-    .catch(()=>{
-        saveStoredProfile(profile);
-        alert("Profile saved locally. Backend profile API is not available yet.");
-    });
-}
-
-function changePassword(){
-    const currentPassword = document.getElementById("currentPassword").value;
-    const newPassword = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-
-    if(!currentPassword || !newPassword || !confirmPassword){
-        alert("Please fill in all password fields.");
-        return;
-    }
-    if(newPassword.length < 4){
-        alert("New password must be at least 4 characters.");
-        return;
-    }
-    if(newPassword !== confirmPassword){
-        alert("Confirm password does not match.");
-        return;
-    }
-
-    fetch("http://localhost:8081/users/password",{
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({username, currentPassword, newPassword})
-    })
-    .then(res=>res.text())
-    .then(message=>{
-        alert(message);
-        if(message.toLowerCase().includes("success")){
-            document.getElementById("currentPassword").value = "";
-            document.getElementById("newPassword").value = "";
-            document.getElementById("confirmPassword").value = "";
-        }
-    })
-    .catch(()=>{
-        alert("Cannot change password because backend password API is not available yet.");
-    });
-}
-
-function changeLanguage(lang)    if(approvalCount) approvalCount.innerText = pendingCount;
-let totalMins = 0;
-shiftsData.forEach(shift=>{
-    const mins = calcHours(shift.startTime, shift.endTime);
-    totalMins += mins;
-    const hDisplay = formatHours(mins);
-    const status = normalizeStatus(shift.status);
-    const acceptButton = status !== "approved" ? makeButton("Accept", `approveShift(${shift.id})`) : "";
-    const editButton = makeButton("Edit", `editShift(${shift.id})`, "edit");
-    const deleteButton = makeButton("Delete", `deleteShift(${shift.id})`, "delete");
-    const actions = `<div class="action-group">${acceptButton}${editButton}${deleteButton}</div>`;
-    if(isAdmin){
-        table.innerHTML += `
-            <tr>
-                <td><strong>${safeText(getShiftUser(shift))}</strong></td>
-                <td>${safeText(shift.date)}</td>
-                <td>${safeText(shift.startTime)}</td>
-                <td>${safeText(shift.endTime)}</td>
-                <td><strong>${hDisplay}</strong></td>
-                <td>${safeText(shift.note) || "—"}</td>
-                <td>${statusBadge(status)}</td>
-                <td>${actions}</td>
-            </tr>`;
-    } else {
-        table.innerHTML += `
-            <tr>
-                <td>${safeText(shift.date)}</td>
-                <td>${safeText(shift.startTime)}</td>
-                <td>${safeText(shift.endTime)}</td>
-                <td><strong>${hDisplay}</strong></td>
-                <td>${safeText(shift.note) || "—"}</td>
-                <td>${statusBadge(status)}</td>
-                <td><div class="action-group">${deleteButton}</div></td>
-            </tr>`;
-    }
-});
-if(shiftsData.length === 0){
-    const colspan = isAdmin ? 8 : 7;
-    table.innerHTML = `<tr><td colspan="${colspan}">No shift requests yet.</td></tr>`;
-}
-document.getElementById("totalHours").innerText = formatHours(totalMins);
-}
-function renderApprovedSchedule(){
-const table = document.getElementById("approvedScheduleTable");
-const head = document.getElementById("approvedScheduleHead");
-const approved = shiftsData.filter(s=>normalizeStatus(s.status) === "approved");
-if(isAdmin){
-    head.innerHTML = `<tr><th>User</th><th>Date</th><th>Start</th><th>End</th><th>Status</th></tr>`;
-} else {
-    head.innerHTML = `<tr><th>Date</th><th>Start</th><th>End</th><th>Status</th></tr>`;
-}
-table.innerHTML = "";
-if(approved.length === 0){
-    table.innerHTML = `<tr><td colspan="${isAdmin ? 5 : 4}">No approved schedule yet.</td></tr>`;
-    return;
-}
-approved.forEach(shift=>{
-    if(isAdmin){
-        table.innerHTML += `
-            <tr>
-                <td><strong>${safeText(getShiftUser(shift))}</strong></td>
-                <td>${safeText(shift.date)}</td>
-                <td>${safeText(shift.startTime)}</td>
-                <td>${safeText(shift.endTime)}</td>
-                <td>${statusBadge("approved")}</td>
-            </tr>`;
-    } else {
-        table.innerHTML += `
-            <tr>
-                <td>${safeText(shift.date)}</td>
-                <td>${safeText(shift.startTime)}</td>
-                <td>${safeText(shift.endTime)}</td>
-                <td>${statusBadge("approved")}</td>
-            </tr>`;
-    }
-});
-}
-/* ── ADD SHIFT ── */
-function addShift(){
-const dateVal = document.getElementById("date").value;
-const startVal = document.getElementById("startTime").value;
-const endVal = document.getElementById("endTime").value;
-const noteVal = document.getElementById("note").value;
-if(!dateVal||!startVal||!endVal){
-    alert("Please fill in date, start time and end time.");
-    return;
-}
-if(calcHours(startVal,endVal)<=0){
-    alert("End time must be after start time.");
-    return;
-}
-const shift = {
-    employeeName:username,
-    date:dateVal,
-    startTime:startVal,
-    endTime:endVal,
-    note:noteVal,
-    username:username,
-    status:"pending"
-};
-fetch("http://localhost:8081/shifts",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(shift)
-})
-.then(res=>res.json())
-.then(()=>{ clearForm(); loadShifts(); })
-.catch(()=>{
-    shiftsData.push({
-        id: Date.now(),
-        ...shift
-    });
-    saveDemoShifts();
-    clearForm();
-    renderShifts();
-    renderApprovedSchedule();
-});
-}
-/* ── UPDATE SHIFT ── */
-function updateShift(id, changes){
-const oldShift = shiftsData.find(s=>s.id === id);
-if(!oldShift) return;
-const updatedShift = {
-    ...oldShift,
-    ...changes,
-    username: oldShift.username || oldShift.employeeName || getShiftUser(oldShift),
-    employeeName: oldShift.employeeName || oldShift.username || getShiftUser(oldShift)
-};
-fetch(`http://localhost:8081/shifts/${id}`,{
-    method:"PUT",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(updatedShift)
-})
-.then(res=>{
-    if(!res.ok){
-        throw new Error("Update failed");
-    }
-    return res.json();
-})
-.then(savedShift=>{
-    shiftsData = shiftsData.map(s=>s.id === id ? savedShift : s);
-    renderShifts();
-    renderApprovedSchedule();
-})
-.catch(()=>{
-    shiftsData = shiftsData.map(s=>s.id === id ? updatedShift : s);
-    saveDemoShifts();
-    renderShifts();
-    renderApprovedSchedule();
-});
-}
-function approveShift(id){
-if(!isAdmin){
-    alert("Only admin can approve shifts.");
-    return;
-}
-updateShift(id, {status:"approved"});
-}
-function editShift(id){
-if(!isAdmin){
-    alert("Only admin can edit employee shifts.");
-    return;
-}
-const shift = shiftsData.find(s=>s.id === id);
-if(!shift) return;
-document.getElementById("editShiftId").value = shift.id;
-document.getElementById("editEmployee").value = getShiftUser(shift);
-document.getElementById("editDate").value = shift.date || "";
-document.getElementById("editStartTime").value = shift.startTime || "";
-document.getElementById("editEndTime").value = shift.endTime || "";
-document.getElementById("editNote").value = shift.note || "";
-document.getElementById("editShiftBox").classList.add("open");
-document.getElementById("editShiftBox").scrollIntoView({behavior:"smooth", block:"start"});
-}
-function cancelEditShift(){
-document.getElementById("editShiftId").value = "";
-document.getElementById("editEmployee").value = "";
-document.getElementById("editDate").value = "";
-document.getElementById("editStartTime").value = "";
-document.getElementById("editEndTime").value = "";
-document.getElementById("editNote").value = "";
-document.getElementById("editShiftBox").classList.remove("open");
-}
-function saveEditedShift(){
-const id = Number(document.getElementById("editShiftId").value);
-const shift = shiftsData.find(s=>s.id === id);
-if(!shift) return;
-const newDate = document.getElementById("editDate").value;
-const newStart = document.getElementById("editStartTime").value;
-const newEnd = document.getElementById("editEndTime").value;
-const newNote = document.getElementById("editNote").value;
-if(!newDate || !newStart || !newEnd){
-    alert("Date, start time and end time are required.");
-    return;
-}
-if(calcHours(newStart,newEnd)<=0){
-    alert("End time must be after start time.");
-    return;
-}
-updateShift(id, {
-    date:newDate,
-    startTime:newStart,
-    endTime:newEnd,
-    note:newNote
-});
-cancelEditShift();
-}
-/* ── DELETE SHIFT ── */
-function deleteShift(id){
-if(!confirm("Delete this shift?")) return;
-fetch(`http://localhost:8081/shifts/${id}`,{method:"DELETE"})
-.then(()=>loadShifts())
-.catch(()=>{
-    shiftsData = shiftsData.filter(s=>s.id!==id);
-    saveDemoShifts();
-    renderShifts();
-    renderApprovedSchedule();
-});
-}
-/* ── CLEAR FORM ── */
-function clearForm(){
-document.getElementById("date").value="";
-    localStorage.setItem("language", lang);
-    applyLanguage(lang);
-}
-
-function savePreferences(){
-    const prefs = {
-        username:username,
-        language:document.getElementById("languageSelect").value,
-        emailNotifications:document.getElementById("emailNotifications").checked,
-        shiftReminders:document.getElementById("shiftReminders").checked
-    };
-
-    localStorage.setItem("prefs_" + username, JSON.stringify(prefs));
-    localStorage.setItem("language", prefs.language);
-    applyLanguage(prefs.language);
-
-    fetch("http://localhost:8081/users/preferences",{
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(prefs)
-    })
-    .then(res=>{
-        if(!res.ok) throw new Error("Save preferences failed");
-        return res.json();
-    })
-    .then(()=>alert("Preferences saved."))
-    .catch(()=>alert("Preferences saved locally. Backend preferences API is not available yet."));
 }
 
 function logout(){
