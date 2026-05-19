@@ -12,12 +12,10 @@ import com.example.demo.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    @Query("""
-        SELECT m FROM Message m
-        WHERE (m.sender = :user1 AND m.receiver = :user2)
-           OR (m.sender = :user2 AND m.receiver = :user1)
-        ORDER BY m.createdAt ASC
-        """)
+    @Query("SELECT m FROM Message m " +
+           "WHERE (m.sender = :user1 AND m.receiver = :user2) " +
+           "OR (m.sender = :user2 AND m.receiver = :user1) " +
+           "ORDER BY m.createdAt ASC")
     List<Message> findConversation(
         @Param("user1") String user1,
         @Param("user2") String user2
@@ -30,26 +28,22 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     long countByReceiverAndReadStatusFalse(String receiver);
 
-    @Query("""
-        SELECT DISTINCT
-            CASE
-                WHEN m.sender = :admin THEN m.receiver
-                ELSE m.sender
-            END
-        FROM Message m
-        WHERE m.sender = :admin OR m.receiver = :admin
-        """)
+    @Query("SELECT DISTINCT " +
+           "CASE " +
+           "WHEN m.sender = :admin THEN m.receiver " +
+           "ELSE m.sender " +
+           "END " +
+           "FROM Message m " +
+           "WHERE m.sender = :admin OR m.receiver = :admin")
     List<String> findChatUsers(@Param("admin") String admin);
 
     @Modifying
     @Transactional
-    @Query("""
-        UPDATE Message m
-        SET m.readStatus = true
-        WHERE m.receiver = :receiver
-          AND m.sender = :sender
-          AND m.readStatus = false
-        """)
+    @Query("UPDATE Message m " +
+           "SET m.readStatus = true " +
+           "WHERE m.receiver = :receiver " +
+           "AND m.sender = :sender " +
+           "AND m.readStatus = false")
     void markMessagesAsRead(
         @Param("receiver") String receiver,
         @Param("sender") String sender

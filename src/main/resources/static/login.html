@@ -4,603 +4,279 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shift Manager — Login</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-
+:root{
+    --bg:#f5f3ef;
+    --card:#ffffff;
+    --left-bg:#2c3e50;
+    --left-bg2:#1a252f;
+    --accent:#b8860b;
+    --accent-light:#d4a832;
+    --text:#1a1a2e;
+    --muted:#6b7280;
+    --muted2:#9ca3af;
+    --border:#e8e4dd;
+    --shadow-lg:0 12px 48px rgba(0,0,0,0.12);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-
+html,body{height:100%;}
 body{
-    min-height:100vh;
-    display:flex;
-    font-family:"Segoe UI",system-ui,sans-serif;
-    background:#f0f2f5;
-}
-
-/* ── LEFT PANEL ── */
-.left-panel{
-    width:45%;
-    background:#1f2937;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    padding:48px 52px;
-    position:relative;
-    overflow:hidden;
-}
-
-/* subtle geometric decoration */
-.left-panel::before{
-    content:"";
-    position:absolute;
-    width:320px;height:320px;
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:50%;
-    top:-80px;right:-80px;
-}
-.left-panel::after{
-    content:"";
-    position:absolute;
-    width:220px;height:220px;
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:50%;
-    bottom:60px;left:-60px;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.brand-icon{
-    width:40px;height:40px;
-    background:rgba(255,255,255,0.1);
-    border-radius:10px;
+    min-height:100vh;background:var(--bg);
+    font-family:'Inter',sans-serif;color:var(--text);
     display:flex;align-items:center;justify-content:center;
+    padding:20px;position:relative;
+}
+body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;
+    background-image:
+        radial-gradient(circle at 20% 20%,rgba(184,134,11,0.07) 0%,transparent 50%),
+        radial-gradient(circle at 80% 80%,rgba(44,62,80,0.07) 0%,transparent 50%);
+}
+body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;
+    background-image:radial-gradient(circle,rgba(184,134,11,0.07) 1px,transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);
 }
 
-.brand-icon svg{
-    width:20px;height:20px;
-    stroke:#fff;
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;stroke-linejoin:round;
+/* ── CARD ── */
+.card{
+    position:relative;z-index:10;
+    display:flex;width:100%;max-width:1020px;
+    min-height:580px;border-radius:24px;overflow:hidden;
+    box-shadow:var(--shadow-lg),0 0 0 1px rgba(255,255,255,0.8);
+    animation:cardIn .7s cubic-bezier(0.16,1,0.3,1) both;
 }
+@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(0.98);}to{opacity:1;transform:translateY(0) scale(1);}}
 
-.brand-name{
-    font-size:18px;
-    font-weight:700;
-    color:#fff;
-    letter-spacing:-.2px;
-}
-
-.left-content{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:40px 0;
-}
-
-.left-heading{
-    font-size:32px;
-    font-weight:700;
-    color:#fff;
-    line-height:1.3;
-    margin-bottom:16px;
-    letter-spacing:-.4px;
-}
-
-.left-sub{
-    font-size:15px;
-    color:rgba(255,255,255,0.55);
-    line-height:1.7;
-    max-width:320px;
-}
-
-/* feature list */
-.feature-list{
-    margin-top:40px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.feature-item{
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-}
-
-.feature-dot{
-    width:8px;height:8px;
-    border-radius:50%;
-    background:#4ade80;
-    margin-top:6px;
+/* ── LEFT ── */
+.left{
+    width:42%;
+    background:linear-gradient(160deg,var(--left-bg) 0%,var(--left-bg2) 100%);
+    padding:48px 44px;display:flex;flex-direction:column;
+    justify-content:space-between;position:relative;overflow:hidden;
     flex-shrink:0;
 }
+.left::before{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(255,255,255,0.07);border-radius:50%;top:-80px;right:-80px;}
+.left::after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(255,255,255,0.05);border-radius:50%;bottom:40px;left:-40px;}
+.left-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-light),transparent);}
+.brand{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+.brand-mark{width:40px;height:40px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.brand-mark svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.brand-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;letter-spacing:.2px;}
+.left-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 0;position:relative;z-index:1;}
+.left-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(184,134,11,0.15);border:1px solid rgba(184,134,11,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent-light);margin-bottom:20px;width:fit-content;}
+.left-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-light);}
+.left-heading{font-family:'Playfair Display',serif;font-size:32px;line-height:1.25;color:#fff;margin-bottom:14px;}
+.left-heading em{font-style:italic;color:var(--accent-light);}
+.left-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.75;max-width:270px;}
+.features{margin-top:32px;display:flex;flex-direction:column;gap:10px;}
+.feature{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;transition:.2s;}
+.feature:hover{background:rgba(255,255,255,0.08);border-color:rgba(184,134,11,0.2);}
+.feature-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-light);flex-shrink:0;}
+.feature-text{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;}
+.feature-text strong{color:rgba(255,255,255,0.9);display:block;font-size:13px;margin-bottom:1px;}
+.left-footer{font-size:11px;color:rgba(255,255,255,0.25);position:relative;z-index:1;}
 
-.feature-text{
-    font-size:14px;
-    color:rgba(255,255,255,0.65);
-    line-height:1.5;
+/* ── RIGHT ── */
+.right{flex:1;background:var(--card);padding:48px 48px;display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.right-header{margin-bottom:32px;}
+.right-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.right-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);margin-bottom:6px;line-height:1.2;}
+.right-sub{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* ── FIELDS ── */
+.field{margin-bottom:18px;}
+.field-label{font-size:12px;font-weight:600;letter-spacing:.3px;color:var(--muted);margin-bottom:7px;display:block;}
+.field-wrap{position:relative;}
+.field-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;transition:stroke .2s;}
+.field-input{width:100%;height:50px;padding:0 14px 0 44px;background:#fafaf8;border:1.5px solid var(--border);border-radius:12px;font-size:15px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none;}
+.field-input::placeholder{color:var(--muted2);}
+.field-input:hover{border-color:#d4c9b8;background:#fff;}
+.field-input:focus{border-color:rgba(184,134,11,0.5);background:#fff;box-shadow:0 0 0 3px rgba(184,134,11,0.08);}
+.field-wrap:focus-within .field-ico{stroke:var(--accent);}
+.field-input.has-right{padding-right:44px;}
+.eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.eye-btn svg{width:16px;height:16px;stroke:var(--muted2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:.15s;}
+.eye-btn:hover svg{stroke:var(--accent);}
+
+/* ── OPTIONS ── */
+.opts-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:8px;}
+.check-label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.check-label input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+.forgot{font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;}
+.forgot:hover{text-decoration:underline;}
+
+/* ── BUTTON ── */
+.btn-main{
+    width:100%;height:52px;
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-light) 100%);
+    color:#fff;border:none;border-radius:12px;
+    font-size:15px;font-weight:600;font-family:'Inter',sans-serif;
+    cursor:pointer;letter-spacing:.2px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    position:relative;overflow:hidden;
+    transition:transform .15s,box-shadow .2s;
+    box-shadow:0 4px 20px rgba(184,134,11,0.3);
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
 }
-
-.feature-text strong{
-    color:#fff;
-    font-weight:600;
-    display:block;
-    margin-bottom:2px;
-}
-
-.left-footer{
-    font-size:12px;
-    color:rgba(255,255,255,0.3);
-}
-
-/* ── RIGHT PANEL ── */
-.right-panel{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:40px 32px;
-}
-
-.login-card{
-    width:100%;
-    max-width:400px;
-}
-
-.login-title{
-    font-size:26px;
-    font-weight:700;
-    color:#111827;
-    margin-bottom:6px;
-    letter-spacing:-.3px;
-}
-
-.login-subtitle{
-    font-size:14px;
-    color:#6b7280;
-    margin-bottom:36px;
-    line-height:1.6;
-}
-
-/* ── FORM ── */
-.field-group{
-    margin-bottom:20px;
-}
-
-.field-label{
-    font-size:13px;
-    font-weight:600;
-    color:#374151;
-    margin-bottom:8px;
-    display:block;
-    letter-spacing:.2px;
-}
-
-.field-wrap{
-    position:relative;
-}
-
-.field-icon{
-    position:absolute;
-    left:14px;top:50%;
-    transform:translateY(-50%);
-    width:18px;height:18px;
-    stroke:#9ca3af;
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;stroke-linejoin:round;
-    pointer-events:none;
-}
-
-.field-input{
-    width:100%;
-    height:50px;
-    padding:0 14px 0 44px;
-    border:1.5px solid #e5e7eb;
-    border-radius:12px;
-    font-size:15px;
-    color:#111827;
-    background:#fff;
-    outline:none;
-    transition:border-color .2s, box-shadow .2s;
-    font-family:inherit;
-}
-
-.field-input:hover{
-    border-color:#d1d5db;
-}
-
-.field-input:focus{
-    border-color:#1f2937;
-    box-shadow:0 0 0 3px rgba(31,41,55,0.08);
-}
-
-.field-input::placeholder{
-    color:#c4c9d1;
-}
-
-/* password toggle */
-.eye-btn{
-    position:absolute;
-    right:14px;top:50%;
-    transform:translateY(-50%);
-    background:none;
-    border:none;
-    padding:4px;
-    cursor:pointer;
-    display:flex;align-items:center;
-}
-
-.eye-btn svg{
-    width:18px;height:18px;
-    stroke:#9ca3af;
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;stroke-linejoin:round;
-    transition:.15s;
-}
-
-.eye-btn:hover svg{stroke:#374151;}
-
-/* remember row */
-.row-opts{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:28px;
-}
-
-.remember-label{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-    color:#6b7280;
-    cursor:pointer;
-}
-
-.remember-label input[type="checkbox"]{
-    width:16px;height:16px;
-    accent-color:#1f2937;
-    cursor:pointer;
-}
-
-.forgot-link{
-    font-size:13px;
-    color:#1f2937;
-    text-decoration:none;
-    font-weight:600;
-}
-
-.forgot-link:hover{text-decoration:underline;}
-
-/* ── LOGIN BUTTON ── */
-.btn-login{
-    width:100%;
-    height:52px;
-    background:#1f2937;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    font-size:15px;
-    font-weight:700;
-    font-family:inherit;
-    cursor:pointer;
-    transition:background .2s, transform .1s;
-    display:flex;align-items:center;justify-content:center;gap:8px;
-    letter-spacing:.1px;
-}
-
-.btn-login:hover{background:#111827;}
-.btn-login:active{transform:scale(0.98);}
-
-.btn-login svg{
-    width:18px;height:18px;
-    stroke:#fff;
-    fill:none;
-    stroke-width:2.5;
-    stroke-linecap:round;stroke-linejoin:round;
-}
-
-/* ── ERROR ── */
-.error-box{
-    display:none;
-    background:#fef2f2;
-    border:1px solid #fecaca;
-    border-radius:10px;
-    padding:12px 16px;
-    margin-top:18px;
-    font-size:13px;
-    color:#b91c1c;
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.error-box.hidden{display:none;}
-
-.error-box svg{
-    width:16px;height:16px;
-    stroke:#b91c1c;
-    fill:none;
-    stroke-width:2;
-    flex-shrink:0;
-}
-
-/* ── DIVIDER ── */
-.divider{
-    display:flex;align-items:center;gap:12px;
-    margin:24px 0;
-    color:#d1d5db;
-    font-size:12px;
-}
-
-.divider::before,.divider::after{
-    content:"";flex:1;
-    height:1px;background:#e5e7eb;
-}
-
-/* version tag */
-.version-tag{
-    text-align:center;
-    margin-top:28px;
-    font-size:12px;
-    color:#c4c9d1;
-}
-
-/* loading spinner */
-.spinner{
-    display:none;
-    width:18px;height:18px;
-    border:2px solid rgba(255,255,255,0.3);
-    border-top-color:#fff;
-    border-radius:50%;
-    animation:spin .7s linear infinite;
-}
-
+.btn-main::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);opacity:0;transition:opacity .2s;}
+.btn-main:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(184,134,11,0.35);}
+.btn-main:hover::before{opacity:1;}
+.btn-main:active{transform:scale(0.98);}
+.btn-main:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.btn-main svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── RESPONSIVE ── */
+/* ── MESSAGES ── */
+.error-box{display:flex;align-items:center;gap:8px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-top:14px;font-size:13px;color:#b91c1c;line-height:1.4;}
+.error-box.hidden{display:none;}
+.error-box svg{width:15px;height:15px;stroke:#b91c1c;fill:none;stroke-width:2;flex-shrink:0;}
+
+/* ── DIVIDER & FOOTER ── */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;font-size:12px;color:var(--muted2);}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border);}
+.bottom-link{text-align:center;font-size:14px;color:var(--muted);}
+.bottom-link a{color:var(--accent);font-weight:600;text-decoration:none;}
+.bottom-link a:hover{text-decoration:underline;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════════════════════
+   MOBILE (≤768px)
+   ══════════════════════════════ */
 @media(max-width:768px){
-    .left-panel{display:none;}
-    body{background:#f0f2f5;}
-    .right-panel{padding:32px 20px;}
-    .login-title{font-size:22px;}
+    body{padding:0;align-items:stretch;background:var(--card);}
+    body::after{display:none;}
+    .card{flex-direction:column;border-radius:0;box-shadow:none;min-height:100vh;}
+
+    /* left becomes compact top banner */
+    .left{
+        width:100%;padding:28px 24px 24px;
+        flex-direction:row;align-items:center;
+        min-height:auto;gap:0;
+    }
+    .left::before,.left::after{display:none;}
+    .left-body,.left-footer,.features,.left-sub,.left-tag,.left-heading{display:none;}
+    .brand{margin:0;}
+
+    /* right fills screen */
+    .right{padding:32px 24px 40px;flex:1;justify-content:flex-start;padding-top:36px;}
+    .right-header{margin-bottom:24px;}
+    .right-title{font-size:24px;}
+    .field-input{height:54px;font-size:16px;} /* 16px prevents iOS zoom */
+    .btn-main{height:54px;font-size:16px;}
+    .opts-row{margin-bottom:20px;}
 }
 
+@media(max-width:380px){
+    .right{padding:24px 18px 32px;}
+    .right-title{font-size:22px;}
+}
 </style>
 </head>
 <body>
-
-<!-- LEFT PANEL -->
-<div class="left-panel">
-
-    <div class="brand">
-        <div class="brand-icon">
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="4" width="18" height="18" rx="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
+<div class="card">
+    <!-- LEFT -->
+    <div class="left">
+        <div class="left-accent"></div>
+        <div class="brand">
+            <div class="brand-mark"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <span class="brand-name">Shift Manager</span>
         </div>
-        <span class="brand-name">Shift Manager</span>
-    </div>
-
-    <div class="left-content">
-        <div class="left-heading">Manage your team's schedule with ease</div>
-        <div class="left-sub">A simple, reliable tool built for busy workplaces. No complexity, just clarity.</div>
-
-        <div class="feature-list">
-            <div class="feature-item">
-                <div class="feature-dot"></div>
-                <div class="feature-text">
-                    <strong>Submit availability in seconds</strong>
-                    Pick your dates and times, done.
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-dot"></div>
-                <div class="feature-text">
-                    <strong>Track total working hours</strong>
-                    Always know how much you've logged.
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-dot"></div>
-                <div class="feature-text">
-                    <strong>Stay in sync with your manager</strong>
-                    Messages and approvals in one place.
-                </div>
+        <div class="left-body">
+            <div class="left-tag">Workforce Platform</div>
+            <div class="left-heading">Manage your team with <em>clarity</em></div>
+            <div class="left-sub">A beautifully simple tool for shift scheduling, team messaging, and availability tracking.</div>
+            <div class="features">
+                <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Smart Scheduling</strong>Submit and track shifts in real-time</div></div>
+                <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Direct Messaging</strong>Stay in sync with your manager</div></div>
+                <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Instant Notifications</strong>Get notified on shift approvals</div></div>
             </div>
         </div>
+        <div class="left-footer">&copy; 2026 Shift Manager. All rights reserved.</div>
     </div>
 
-    <div class="left-footer">
-        &copy; 2026 Shift Manager. All rights reserved.
-    </div>
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="right-header">
+            <div class="right-eyebrow">Welcome back</div>
+            <div class="right-title">Sign in to your account</div>
+            <div class="right-sub">Enter your credentials to continue.</div>
+        </div>
 
-</div>
-
-<!-- RIGHT PANEL -->
-<div class="right-panel">
-    <div class="login-card">
-
-        <div class="login-title">Welcome back</div>
-        <div class="login-subtitle">Please enter your credentials to access your account.</div>
-
-        <!-- USERNAME -->
-        <div class="field-group">
+        <div class="field">
             <label class="field-label" for="username">Username</label>
             <div class="field-wrap">
-                <svg class="field-icon" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <input
-                    type="text"
-                    id="username"
-                    class="field-input"
-                    placeholder="Enter your username"
-                    autocomplete="username"
-                    onkeydown="if(event.key==='Enter')login()"
-                >
+                <svg class="field-ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" id="username" class="field-input" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
             </div>
         </div>
 
-        <!-- PASSWORD -->
-        <div class="field-group">
+        <div class="field">
             <label class="field-label" for="password">Password</label>
             <div class="field-wrap">
-                <svg class="field-icon" viewBox="0 0 24 24">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <input
-                    type="password"
-                    id="password"
-                    class="field-input"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    onkeydown="if(event.key==='Enter')login()"
-                    style="padding-right:44px;"
-                >
-                <button class="eye-btn" onclick="togglePassword()" type="button" aria-label="Show/hide password">
-                    <svg id="eyeIcon" viewBox="0 0 24 24">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
+                <svg class="field-ico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="password" class="field-input has-right" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+                <button class="eye-btn" onclick="togglePw()" type="button" aria-label="Show/hide password">
+                    <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- OPTIONS ROW -->
-        <div class="row-opts">
-            <label class="remember-label">
-                <input type="checkbox" id="remember">
-                Remember me
-            </label>
-            <a href="#" class="forgot-link">Forgot password?</a>
+        <div class="opts-row">
+            <label class="check-label"><input type="checkbox" id="remember"> Remember me</label>
+            <a href="#" class="forgot">Forgot password?</a>
         </div>
 
-        <!-- LOGIN BUTTON -->
-        <button class="btn-login" onclick="login()" id="loginBtn">
+        <button class="btn-main" onclick="login()" id="loginBtn">
             <div class="spinner" id="spinner"></div>
-            <svg id="loginIcon" viewBox="0 0 24 24">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                <polyline points="10 17 15 12 10 7"/>
-                <line x1="15" y1="12" x2="3" y2="12"/>
-            </svg>
-            <span id="loginText">Sign in</span>
+            <svg id="loginIcon" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Sign In
         </button>
 
-        <!-- ERROR -->
         <div class="error-box hidden" id="errorBox">
-            <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            <span id="errorMsg">Invalid username or password.</span>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="errorMsg">Invalid credentials.</span>
         </div>
 
-        <div class="version-tag">Shift Manager v1.0</div>
-
+        <div class="divider">or</div>
+        <div class="bottom-link">Don't have an account? <a href="register.html">Create one</a></div>
     </div>
 </div>
-
 <script>
-
-function togglePassword(){
-    const pw = document.getElementById("password");
-    const icon = document.getElementById("eyeIcon");
-    if(pw.type === "password"){
-        pw.type = "text";
-        icon.innerHTML = `
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-            <line x1="1" y1="1" x2="23" y2="23"/>`;
-    } else {
-        pw.type = "password";
-        icon.innerHTML = `
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>`;
-    }
+function togglePw(){
+    const pw=document.getElementById("password");
+    const icon=document.getElementById("eyeIcon");
+    if(pw.type==="password"){pw.type="text";icon.innerHTML=`<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;}
+    else{pw.type="password";icon.innerHTML=`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;}
 }
-
-function showError(msg){
-    const box = document.getElementById("errorBox");
-    document.getElementById("errorMsg").innerText = msg;
-    box.classList.remove("hidden");
-}
-
-function hideError(){
-    document.getElementById("errorBox").classList.add("hidden");
-}
-
-function setLoading(on){
-    document.getElementById("spinner").style.display = on ? "block" : "none";
-    document.getElementById("loginIcon").style.display = on ? "none" : "block";
-    document.getElementById("loginText").innerText = on ? "Signing in..." : "Sign in";
-    document.getElementById("loginBtn").disabled = on;
-}
-
+function showError(msg){const b=document.getElementById("errorBox");document.getElementById("errorMsg").innerText=msg;b.classList.remove("hidden");}
+function setLoading(on){document.getElementById("spinner").style.display=on?"block":"none";document.getElementById("loginIcon").style.display=on?"none":"block";document.getElementById("loginBtn").disabled=on;}
 function login(){
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    hideError();
-
-    if(!username){
-        showError("Please enter your username.");
-        document.getElementById("username").focus();
-        return;
-    }
-    if(!password){
-        showError("Please enter your password.");
-        document.getElementById("password").focus();
-        return;
-    }
-
+    const username=document.getElementById("username").value.trim();
+    const password=document.getElementById("password").value;
+    document.getElementById("errorBox").classList.add("hidden");
+    if(!username){showError("Please enter your username.");return;}
+    if(!password){showError("Please enter your password.");return;}
     setLoading(true);
-
-    fetch("http://localhost:8081/auth/login", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({username, password})
-    })
-    .then(res=>res.json())
+    fetch("http://localhost:8081/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})})
+    .then(r=>r.json())
     .then(data=>{
-        if(data.message === "Login success"){
-            localStorage.setItem("username", username);
-            localStorage.setItem("role", data.role);
-            if(document.getElementById("remember").checked){
-                localStorage.setItem("rememberedUser", username);
-            }
-            window.location.href = "index.html";
-        } else {
-            setLoading(false);
-            showError(data.message || "Invalid username or password.");
-        }
+        if(data.message==="Login success"){
+            localStorage.setItem("username",username);
+            localStorage.setItem("role",data.role);
+            if(document.getElementById("remember").checked) localStorage.setItem("rememberedUser",username);
+            window.location.href="index.html";
+        }else{setLoading(false);showError(data.message||"Invalid username or password.");}
     })
-    .catch(()=>{
-        setLoading(false);
-        showError("Cannot connect to server. Please try again.");
-    });
+    .catch(()=>{setLoading(false);showError("Cannot connect to server.");});
 }
-
-/* prefill remembered user */
-const remembered = localStorage.getItem("rememberedUser");
-if(remembered){
-    document.getElementById("username").value = remembered;
-    document.getElementById("remember").checked = true;
-    document.getElementById("password").focus();
-}
-
+const rem=localStorage.getItem("rememberedUser");
+if(rem){document.getElementById("username").value=rem;document.getElementById("remember").checked=true;}
 </script>
 </body>
 </html>

@@ -1,0 +1,184 @@
+/* ───────── MOBILE RESPONSIVE ───────── */
+@media (max-width: 768px) {
+
+    body {
+        font-size: 14px;
+        overflow-x: hidden;
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
+        flex-direction: row;        /* giữ row, không wrap xuống dòng */
+        align-items: center;
+        padding: 0 14px;
+        height: 58px;
+    }
+
+    .user-pill span {
+        display: none;              /* ẩn tên user trên mobile nhỏ */
+    }
+
+    /* ===== DRAWER ===== */
+    .drawer {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    /* ===== MAIN PANEL ===== */
+    .main {
+        padding: 14px 12px;
+    }
+
+    .page-heading {
+        font-size: 20px;
+    }
+
+    .page-sub {
+        font-size: 13px;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .stats-card {
+        padding: 14px 16px;
+    }
+
+    .stats-value {
+        font-size: 22px;
+    }
+
+    /* ===== CARD BOX ===== */
+    .card-box {
+        padding: 14px;
+        border-radius: 12px;
+        margin-bottom: 14px;
+        overflow: visible !important;
+    }
+
+    /* ===== TABLE ===== */
+    /* QUAN TRỌNG: dùng wrapper scroll, không override display của table */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 10px;
+        margin: 0;
+        width: 100%;
+    }
+
+    .table {
+        min-width: 550px;           /* cho phép scroll ngang */
+        width: 100% !important;
+        display: table !important;  /* giữ đúng display */
+    }
+
+    .table thead {
+        display: table-header-group !important;
+    }
+
+    .table tbody {
+        display: table-row-group !important;
+    }
+
+    .table tr {
+        display: table-row !important;
+    }
+
+    .table th,
+    .table td {
+        display: table-cell !important;
+        font-size: 12px;
+        padding: 10px 10px;
+        white-space: nowrap;
+    }
+
+    /* ===== ACTION BUTTONS ===== */
+    .action-group {
+        gap: 4px;
+        flex-wrap: nowrap;
+    }
+
+    .btn-action {
+        font-size: 11px;
+        padding: 5px 8px;
+        border-radius: 6px;
+    }
+
+    /* ===== FORM ===== */
+    .form-control,
+    select,
+    textarea {
+        font-size: 14px !important;
+        height: 44px;
+    }
+
+    textarea {
+        height: auto !important;
+        min-height: 100px;
+    }
+
+    .btn-save {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .btn-delete {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* ===== CHAT ===== */
+    #chatBox {
+        height: 260px;
+    }
+
+    .bubble {
+        max-width: 85%;
+        font-size: 13px;
+    }
+
+    /* ===== HIDE HELPER ===== */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* ===== STATUS BADGES ===== */
+    .status-approved,
+    .status-pending {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 420px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 10px;
+    }
+
+    .topbar {
+        padding: 0 10px;
+        height: 54px;
+    }
+
+    .page-heading {
+        font-size: 18px;
+    }
+
+    .drawer {
+        width: 88%;
+    }
+
+    .table th,
+    .table td {
+        font-size: 11px;
+        padding: 8px 8px;
+    }
+}
