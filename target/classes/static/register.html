@@ -192,7 +192,7 @@ function register(){
     if(p.length<6){document.getElementById("errorMsg").innerText="Password must be at least 6 characters.";document.getElementById("errorBox").classList.remove("hidden");return;}
     if(p!==c){document.getElementById("errorMsg").innerText="Passwords do not match.";document.getElementById("errorBox").classList.remove("hidden");return;}
     setLoading(true);
-    fetch("http://localhost:8081/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u,password:p})})
+    fetch("https://employee-management-218m.onrender.com/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u,password:p})})
     .then(r=>r.text()).then(msg=>{if(msg==="Register success"){document.getElementById("successBox").classList.remove("hidden");setLoading(false);setTimeout(()=>window.location.href="login.html",1800);}else{setLoading(false);document.getElementById("errorMsg").innerText=msg||"Registration failed.";document.getElementById("errorBox").classList.remove("hidden");}})
     .catch(()=>{setLoading(false);document.getElementById("errorMsg").innerText="Cannot connect to server.";document.getElementById("errorBox").classList.remove("hidden");});
 }

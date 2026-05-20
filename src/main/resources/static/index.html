@@ -418,6 +418,15 @@
 </div><!-- end .main -->
 
 <script>
+/* ── AUTH GUARD ── */
+(function() {
+    const _u = localStorage.getItem("username");
+    const _r = localStorage.getItem("role");
+    if (!_u || !_r) {
+        window.location.href = "register.html";
+    }
+})();
+
 /* ── USER INFO ── */
 const username = localStorage.getItem("username") || "User";
 const role = (localStorage.getItem("role") || "").toLowerCase();
