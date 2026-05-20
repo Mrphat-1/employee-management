@@ -537,7 +537,7 @@ let shiftsData = [];
 
 function loadShifts() {
     const requestUser = isAdmin ? "admin" : username;
-    const url = `http://localhost:8081/shifts?username=${encodeURIComponent(requestUser)}`;
+    const url = `https://employee-management-218m.onrender.com/shifts?username=${encodeURIComponent(requestUser)}`;
 
     fetch(url)
         .then(res => res.json())
@@ -723,7 +723,7 @@ function addShift() {
         status: "pending"
     };
 
-    fetch("http://localhost:8081/shifts", {
+    fetch("https://employee-management-218m.onrender.com/shifts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shift)
@@ -751,7 +751,7 @@ function updateShift(id, changes) {
         employeeName: oldShift.employeeName || oldShift.username || getShiftUser(oldShift)
     };
 
-    fetch(`http://localhost:8081/shifts/${id}`, {
+    fetch(`https://employee-management-218m.onrender.com/shifts/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedShift)
@@ -820,7 +820,7 @@ function saveEditedShift() {
 /* ── DELETE SHIFT ── */
 function deleteShift(id) {
     if (!confirm("Delete this shift?")) return;
-    fetch(`http://localhost:8081/shifts/${id}`, { method: "DELETE" })
+    fetch(`https://employee-management-218m.onrender.com/shifts/${id}`, { method: "DELETE" })
         .then(() => loadShifts())
         .catch(() => {
             shiftsData = shiftsData.filter(s => s.id !== id);
@@ -876,7 +876,7 @@ function renderMessages(messages) {
 
 function loadMessageUsers() {
     if (!isAdmin) return;
-    fetch(`http://localhost:8081/messages/users?admin=${encodeURIComponent(adminAccount)}`)
+    fetch(`https://employee-management-218m.onrender.com/messages/users?admin=${encodeURIComponent(adminAccount)}`)
         .then(res => res.json())
         .then(users => {
             const select = document.getElementById("chatUserSelect");
@@ -905,7 +905,7 @@ function loadMessages() {
     const partner = getChatPartner();
     if (isAdmin && !partner) { renderMessages([]); return; }
 
-    fetch(`http://localhost:8081/messages/conversation?user1=${encodeURIComponent(adminAccount)}&user2=${encodeURIComponent(isAdmin ? partner : username)}`)
+    fetch(`https://employee-management-218m.onrender.com/messages/conversation?user1=${encodeURIComponent(adminAccount)}&user2=${encodeURIComponent(isAdmin ? partner : username)}`)
         .then(res => res.json())
         .then(messages => {
             renderMessages(Array.isArray(messages) ? messages : []);
@@ -933,7 +933,7 @@ function sendMessage() {
         content: text
     };
 
-    fetch("http://localhost:8081/messages", {
+    fetch("https://employee-management-218m.onrender.com/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(message)
@@ -952,7 +952,7 @@ function sendMessage() {
 }
 
 function updateUnreadDot() {
-    fetch(`http://localhost:8081/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+    fetch(`https://employee-management-218m.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
         .then(res => res.json())
         .then(count => {
             document.getElementById("notifDot").style.display = Number(count) > 0 ? "block" : "none";
@@ -963,7 +963,7 @@ function updateUnreadDot() {
 function markMessagesRead() {
     const partner = getChatPartner();
     if (isAdmin && !partner) return;
-    fetch(`http://localhost:8081/messages/read?username=${encodeURIComponent(isAdmin ? adminAccount : username)}&sender=${encodeURIComponent(isAdmin ? partner : adminAccount)}`, {
+    fetch(`https://employee-management-218m.onrender.com/messages/read?username=${encodeURIComponent(isAdmin ? adminAccount : username)}&sender=${encodeURIComponent(isAdmin ? partner : adminAccount)}`, {
         method: "PUT"
     })
         .then(() => updateUnreadDot())
@@ -1069,7 +1069,7 @@ function buildNotifications() {
         }
     }
 
-    fetch(`http://localhost:8081/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+    fetch(`https://employee-management-218m.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
         .then(res => res.json())
         .then(count => {
             if (Number(count) > 0) {
@@ -1189,7 +1189,7 @@ function loadSettings() {
     if (shiftRemind) shiftRemind.checked = prefs.shiftReminders !== false;
 
     /* Chỉ fetch profile — KHÔNG gọi changeLanguage ở đây, initLanguage đã lo */
-    fetch(`http://localhost:8081/users/profile?username=${encodeURIComponent(username)}`)
+    fetch(`https://employee-management-218m.onrender.com/users/profile?username=${encodeURIComponent(username)}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
             if (!data) return;
@@ -1217,7 +1217,7 @@ function saveProfile() {
         return;
     }
 
-    fetch("http://localhost:8081/users/profile", {
+    fetch("https://employee-management-218m.onrender.com/users/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profile)
@@ -1238,7 +1238,7 @@ function changePassword() {
     if (newPassword.length < 4) { alert("Password must be at least 4 characters."); return; }
     if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
 
-    fetch("http://localhost:8081/users/password", {
+    fetch("https://employee-management-218m.onrender.com/users/password", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, currentPassword, newPassword })
@@ -1268,7 +1268,7 @@ function savePreferences() {
     localStorage.setItem("language", prefs.language);
     changeLanguage(prefs.language);
 
-    fetch("http://localhost:8081/users/preferences", {
+    fetch("https://employee-management-218m.onrender.com/users/preferences", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(prefs)
