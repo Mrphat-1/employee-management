@@ -1,0 +1,15 @@
+com\example\demo\entity\User.class
+com\example\demo\controller\AuthController$AuthResponse.class
+com\example\demo\controller\UserSettingsController$PreferencesRequest.class
+com\example\demo\controller\MessageController.class
+com\example\demo\EmployeeManagementApplication.class
+com\example\demo\repository\UserRepository.class
+com\example\demo\controller\UserSettingsController$ProfileRequest.class
+com\example\demo\controller\AuthController.class
+com\example\demo\entity\Message.class
+com\example\demo\entity\Shift.class
+com\example\demo\controller\ShiftController.class
+com\example\demo\controller\UserSettingsController.class
+com\example\demo\controller\UserSettingsController$PasswordRequest.class
+com\example\demo\repository\MessageRepository.class
+com\example\demo\repository\ShiftRepository.class

@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shift Manager</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+    <div class="drawer-header">
+        <div class="logo">Shift Manager</div>
+        <button class="close-btn" onclick="closeDrawer()" aria-label="Đóng menu">✕</button>
+    </div>
+
+    <div class="drawer-user">
+        <div class="user-avatar" id="drawerAvatar">?</div>
+        <div class="user-meta">
+            <div class="uname" id="drawerUsername">User</div>
+            <div class="role-tag" id="drawerRole">Employee</div>
+        </div>
+    </div>
+
+    <nav class="drawer-nav">
+        <div class="menu-section">Workspace</div>
+
+        <a class="menu-item active" onclick="showPanel('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span data-i18n="menuDashboard">Dashboard</span>
+        </a>
+
+        <a class="menu-item" onclick="showPanel('schedule')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span data-i18n="menuSchedule">My Schedule</span>
+        </a>
+
+        <a class="menu-item" onclick="showPanel('messages')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span data-i18n="menuMessages">Messages</span>
+        </a>
+
+        <a class="menu-item" onclick="showPanel('notifications')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span data-i18n="menuNotifications">Notifications</span>
+        </a>
+
+        <div class="menu-section">Account</div>
+
+        <a class="menu-item" onclick="showPanel('settings')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06A2 2 0 0 1 20.46 6.46l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span data-i18n="menuSettings">Settings</span>
+        </a>
+
+        <a class="menu-item" onclick="showPanel('help')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span data-i18n="menuHelp">Help &amp; Support</span>
+        </a>
+    </nav>
+
+    <div class="drawer-footer">
+        <button class="logout-btn" onclick="logout()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span data-i18n="logoutBtn">Logout</span>
+        </button>
+    </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <button class="hamburger" onclick="openDrawer()" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-right">
+        <button class="notif-btn" onclick="showPanel('notifications')" aria-label="Thông báo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notif-dot" id="notifDot" style="display:none;"></span>
+        </button>
+        <div class="user-pill">
+            <div class="mini-avatar" id="topAvatar">?</div>
+            <span id="topUsername">User</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="panel active" id="panel-dashboard">
+        <div class="page-heading" id="dashboardHeading" data-i18n="welcome">Welcome Back 👋</div>
+        <div class="page-sub" id="dashboardSub" data-i18n="dashboardSub">Employee Shift Management System</div>
+
+        <div class="cards">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                </div>
+                <div class="stats-title" id="totalShiftTitle" data-i18n="totalShiftTitle">Total Shifts</div>
+                <div class="stats-value" id="totalShift">0</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <div class="stats-title" data-i18n="totalHoursTitle">Total Hours</div>
+                <div class="stats-value" id="totalHours">0h</div>
+            </div>
+        </div>
+
+        <!-- REGISTER AVAILABILITY -->
+        <div class="card-box" id="availabilityBox">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span data-i18n="registerAvailabilityTitle">Register Availability</span>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" data-i18n="dateLabel">Date</label>
+                    <input type="date" id="date" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" data-i18n="availableFromLabel">Available From</label>
+                    <input type="time" id="startTime" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" data-i18n="availableUntilLabel">Available Until</label>
+                    <input type="time" id="endTime" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" data-i18n="noteLabel">Note</label>
+                    <textarea id="note" class="form-control" rows="3" data-i18n-placeholder="notePlaceholder" placeholder="Optional note"></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn-save" onclick="addShift()" data-i18n="submitAvailabilityBtn">Submit Availability</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN EDIT SHIFT -->
+        <div class="card-box edit-panel" id="editShiftBox">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                </svg>
+                <span data-i18n="editShiftTitle">Edit Employee Shift</span>
+            </div>
+            <input type="hidden" id="editShiftId">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label" data-i18n="employeeLabel">Employee</label>
+                    <input type="text" id="editEmployee" class="form-control" disabled>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" data-i18n="dateLabel">Date</label>
+                    <input type="date" id="editDate" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" data-i18n="startLabel">Start</label>
+                    <input type="time" id="editStartTime" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" data-i18n="endLabel">End</label>
+                    <input type="time" id="editEndTime" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" data-i18n="noteLabel">Note</label>
+                    <textarea id="editNote" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col-12 d-flex gap-2">
+                    <button class="btn-save" onclick="saveEditedShift()" data-i18n="saveEditBtn">Save Edit</button>
+                    <button class="btn-delete" onclick="cancelEditShift()" data-i18n="cancelBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SHIFT TABLE -->
+        <div class="card-box">
+            <div class="section-title" id="shiftRequestTitle">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+                <span data-i18n="shiftRequestTitle">My Shift Requests</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <!-- ✅ FIX: thêm id để JS render vào đúng chỗ -->
+                    <thead id="shiftTableHead"></thead>
+                    <tbody id="shiftTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- end panel-dashboard -->
+
+    <!-- ===== MY SCHEDULE ===== -->
+    <div class="panel" id="panel-schedule">
+        <div class="page-heading" id="scheduleHeading" data-i18n="scheduleHeading">My Schedule</div>
+        <div class="page-sub" id="scheduleSub" data-i18n="scheduleSub">Approved work schedule</div>
+
+        <div class="card-box">
+            <div class="section-title" id="approvedScheduleTitle" data-i18n="approvedScheduleTitle">Approved Work Schedule</div>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead id="approvedScheduleHead"></thead>
+                    <tbody id="approvedScheduleTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MESSAGES ===== -->
+    <div class="panel" id="panel-messages">
+        <div class="page-heading" data-i18n="messagesHeading">Messages</div>
+        <div class="page-sub" id="messageSub" data-i18n="messageSub">Chat with your manager</div>
+
+        <div class="card-box">
+            <div class="mb-3" id="adminChatSelector" style="display:none;">
+                <label class="form-label" data-i18n="selectEmployeeLabel">Select employee</label>
+                <select id="chatUserSelect" class="form-control form-select" onchange="selectChatUser(this.value)">
+                    <option value="" data-i18n="selectEmployeePlaceholder">Choose employee...</option>
+                </select>
+            </div>
+            <div id="chatBox">
+                <div class="message-admin">
+                    <div class="sender">Manager</div>
+                    <div class="bubble">Please submit next week's availability.</div>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <input type="text" id="messageInput" class="form-control"
+                    data-i18n-placeholder="typeMessagePlaceholder" placeholder="Type message...">
+                <button class="btn-save" onclick="sendMessage()" data-i18n="sendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NOTIFICATIONS ===== -->
+    <div class="panel" id="panel-notifications">
+        <div class="page-heading" data-i18n="notificationsHeading">Notifications</div>
+        <div class="page-sub" data-i18n="notificationsSub">Your latest updates</div>
+
+        <div class="card-box">
+            <div id="notifList" style="display:flex;flex-direction:column;gap:12px;">
+                <div style="color:#aaa;font-size:14px;text-align:center;padding:20px;">Loading notifications...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="panel" id="panel-settings">
+        <div class="page-heading" data-i18n="settingsTitle">Settings</div>
+        <div class="page-sub" data-i18n="settingsSub">Manage your account preferences</div>
+
+        <div class="card-box">
+            <div class="section-title" data-i18n="profileTitle">Profile</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="usernameLabel">Username</label>
+                    <input type="text" id="settingUsername" class="form-control" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="fullNameLabel">Full Name</label>
+                    <input type="text" id="settingFullName" class="form-control"
+                        data-i18n-placeholder="fullNameLabel" placeholder="Your full name">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="emailLabel">Email</label>
+                    <input type="email" id="settingEmail" class="form-control" placeholder="your@email.com">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="phoneLabel">Phone</label>
+                    <input type="tel" id="settingPhone" class="form-control" placeholder="+84 000 000 000">
+                </div>
+                <div class="col-12">
+                    <button class="btn-save" onclick="saveProfile()" data-i18n="saveProfileBtn">Save Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="section-title" data-i18n="securityTitle">Security</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="currentPasswordLabel">Current Password</label>
+                    <input type="password" id="currentPassword" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="newPasswordLabel">New Password</label>
+                    <input type="password" id="newPassword" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" data-i18n="confirmPasswordLabel">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="col-12">
+                    <button class="btn-save" onclick="changePassword()" data-i18n="changePasswordBtn">Change Password</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="section-title" data-i18n="preferencesTitle">Preferences</div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label" data-i18n="languageLabel">Language</label>
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="vi">Tiếng Việt</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label d-flex align-items-center gap-2">
+                        <input type="checkbox" id="emailNotifications" checked>
+                        <span data-i18n="emailNotificationsLabel">Email notifications</span>
+                    </label>
+                    <label class="form-label d-flex align-items-center gap-2" style="margin-top:8px;">
+                        <input type="checkbox" id="shiftReminders" checked>
+                        <span data-i18n="shiftRemindersLabel">Shift reminders</span>
+                    </label>
+                </div>
+                <div class="col-12">
+                    <button class="btn-save" onclick="savePreferences()" data-i18n="savePreferencesBtn">Save Preferences</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HELP ===== -->
+    <div class="panel" id="panel-help">
+        <div class="page-heading" data-i18n="helpHeading">Help &amp; Support</div>
+        <div class="page-sub" data-i18n="helpSub">Find answers and contact support</div>
+
+        <div class="card-box">
+            <div class="section-title" data-i18n="faqTitle">Frequently Asked Questions</div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <details style="border:1px solid #eee;border-radius:10px;padding:14px;">
+                    <summary style="font-weight:600;font-size:14px;cursor:pointer;" data-i18n="faq1Q">How do I submit availability?</summary>
+                    <p style="font-size:13px;color:#666;margin-top:10px;" data-i18n="faq1A">Go to the Dashboard and fill in the Register Availability form with your preferred date and time window, then click Submit.</p>
+                </details>
+                <details style="border:1px solid #eee;border-radius:10px;padding:14px;">
+                    <summary style="font-weight:600;font-size:14px;cursor:pointer;" data-i18n="faq2Q">How is Total Hours calculated?</summary>
+                    <p style="font-size:13px;color:#666;margin-top:10px;" data-i18n="faq2A">Total Hours sums the duration of every shift request you've submitted (end time minus start time) and displays the total in hours and minutes.</p>
+                </details>
+                <details style="border:1px solid #eee;border-radius:10px;padding:14px;">
+                    <summary style="font-weight:600;font-size:14px;cursor:pointer;" data-i18n="faq3Q">How do I contact my manager?</summary>
+                    <p style="font-size:13px;color:#666;margin-top:10px;" data-i18n="faq3A">Use the Messages section from the side menu to send messages directly to your manager.</p>
+                </details>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="section-title" data-i18n="contactSupportTitle">Contact Support</div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label" data-i18n="yourMessageLabel">Your message</label>
+                    <textarea class="form-control" rows="4"
+                        data-i18n-placeholder="yourMessagePlaceholder"
+                        placeholder="Describe your issue..."></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn-save" data-i18n="sendToSupportBtn">Send to Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end .main -->
+
+<script>
+/* ── USER INFO ── */
+const username = localStorage.getItem("username") || "User";
+const role = (localStorage.getItem("role") || "").toLowerCase();
+const isAdmin = role === "admin" || username.toLowerCase() === "admin";
+const initials = username.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "U";
+
+document.getElementById("topUsername").innerText = username;
+document.getElementById("topAvatar").innerText = initials;
+document.getElementById("drawerUsername").innerText = username;
+document.getElementById("drawerAvatar").innerText = initials;
+document.getElementById("drawerRole").innerText = isAdmin ? "Admin" : "Employee";
+document.getElementById("settingUsername").value = username;
+
+if (isAdmin) {
+    document.getElementById("availabilityBox").style.display = "none";
+}
+
+/* Admin text overrides — lưu riêng, applyLanguage sẽ skip các id này */
+const adminTextOverrides = isAdmin ? {
+    "dashboardHeading": { en: "Admin Dashboard", vi: "Bảng quản trị" },
+    "dashboardSub":     { en: "Review and manage employee shift requests", vi: "Xem và quản lý yêu cầu ca làm việc" },
+    "totalShiftTitle":  { en: "Total Requests", vi: "Tổng yêu cầu" },
+    "scheduleHeading":  { en: "Approved Schedules", vi: "Lịch đã duyệt" },
+    "scheduleSub":      { en: "Approved work schedules by employee", vi: "Lịch làm việc đã duyệt theo nhân viên" },
+    "approvedScheduleTitle": { en: "Approved Employee Work Schedule", vi: "Lịch làm việc nhân viên đã duyệt" },
+    "messageSub":       { en: "Chat with employees", vi: "Nhắn tin với nhân viên" },
+} : {};
+
+/* ── DRAWER ── */
+function openDrawer() {
+    document.getElementById("drawer").classList.add("open");
+    document.getElementById("overlay").classList.add("open");
+}
+function closeDrawer() {
+    document.getElementById("drawer").classList.remove("open");
+    document.getElementById("overlay").classList.remove("open");
+}
+
+/* ── PANELS ── */
+function showPanel(id) {
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
+
+    const panel = document.getElementById("panel-" + id);
+    if (panel) panel.classList.add("active");
+
+    document.querySelectorAll(".menu-item").forEach(m => {
+        if (m.getAttribute("onclick") && m.getAttribute("onclick").includes("'" + id + "'")) {
+            m.classList.add("active");
+        }
+    });
+
+    closeDrawer();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (id === "messages") openMessages();
+    if (id === "notifications") buildNotifications();
+}
+
+/* ── HELPERS ── */
+function calcHours(start, end) {
+    if (!start || !end) return 0;
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+    const mins = (eh * 60 + em) - (sh * 60 + sm);
+    return mins > 0 ? mins : 0;
+}
+
+function formatHours(totalMins) {
+    const h = Math.floor(totalMins / 60);
+    const m = totalMins % 60;
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+}
+
+function safeText(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    }[char]));
+}
+
+function normalizeStatus(status) {
+    return (status || "pending").toLowerCase();
+}
+
+function getShiftUser(shift) {
+    return shift.username || shift.employeeName || shift.name || shift.user || "Unknown";
+}
+
+/* ── STATUS BADGE với i18n ── */
+function statusBadge(status) {
+    const normalized = normalizeStatus(status);
+    if (normalized === "approved") {
+        const label = (translations && translations["statusApproved"]) || "Approved";
+        return `<span class="status-approved">${label}</span>`;
+    }
+    const label = (translations && translations["statusPending"]) || "Pending";
+    return `<span class="status-pending">${label}</span>`;
+}
+
+/* ── BUTTON với i18n ── */
+function makeButton(key, defaultLabel, onclick, type) {
+    const label = (translations && translations[key]) || defaultLabel;
+    return `<button class="btn-action ${type}" onclick="${onclick}">${label}</button>`;
+}
+
+/* ── LOAD SHIFTS ── */
+let shiftsData = [];
+
+function loadShifts() {
+    const requestUser = isAdmin ? "admin" : username;
+    const url = `http://localhost:8081/shifts?username=${encodeURIComponent(requestUser)}`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            shiftsData = Array.isArray(data) ? data : [];
+            renderShifts();
+            renderApprovedSchedule();
+            buildNotifications();
+        })
+        .catch(() => {
+            shiftsData = JSON.parse(localStorage.getItem("demoShifts") || "[]");
+            if (!isAdmin) {
+                shiftsData = shiftsData.filter(s => getShiftUser(s) === username);
+            }
+            renderShifts();
+            renderApprovedSchedule();
+            buildNotifications();
+        });
+}
+
+function saveDemoShifts() {
+    const allDemoShifts = JSON.parse(localStorage.getItem("demoShifts") || "[]");
+    const otherShifts = allDemoShifts.filter(s => !shiftsData.some(c => c.id === s.id));
+    localStorage.setItem("demoShifts", JSON.stringify([...otherShifts, ...shiftsData]));
+}
+
+/* ── RENDER TABLE với i18n column headers ── */
+function t(key, fallback) {
+    return (translations && translations[key]) || fallback;
+}
+
+function renderShifts() {
+    const head = document.getElementById("shiftTableHead");
+    const table = document.getElementById("shiftTable");
+    if (!head || !table) return;
+
+    table.innerHTML = "";
+
+    if (isAdmin) {
+        head.innerHTML = `<tr>
+            <th>${t("colUser","User")}</th>
+            <th>${t("colDate","Date")}</th>
+            <th>${t("startLabel","Start")}</th>
+            <th>${t("endLabel","End")}</th>
+            <th>${t("colHours","Hours")}</th>
+            <th>${t("noteLabel","Note")}</th>
+            <th>${t("colStatus","Status")}</th>
+            <th>${t("colAction","Action")}</th>
+        </tr>`;
+    } else {
+        head.innerHTML = `<tr>
+            <th>${t("colDate","Date")}</th>
+            <th>${t("startLabel","Start")}</th>
+            <th>${t("endLabel","End")}</th>
+            <th>${t("colHours","Hours")}</th>
+            <th>${t("noteLabel","Note")}</th>
+            <th>${t("colStatus","Status")}</th>
+            <th>${t("colAction","Action")}</th>
+        </tr>`;
+    }
+
+    document.getElementById("totalShift").innerText = shiftsData.length;
+
+    let totalMins = 0;
+    shiftsData.forEach(shift => {
+        const mins = calcHours(shift.startTime, shift.endTime);
+        totalMins += mins;
+        const hDisplay = formatHours(mins);
+        const status = normalizeStatus(shift.status);
+
+        const acceptButton = status !== "approved"
+            ? makeButton("acceptBtn", "Accept", `approveShift(${shift.id})`, "accept")
+            : "";
+        const editButton = makeButton("editBtn", "Edit", `editShift(${shift.id})`, "edit");
+        const deleteButton = makeButton("deleteBtn", "Delete", `deleteShift(${shift.id})`, "delete");
+        const actions = `<div class="action-group">${acceptButton}${editButton}${deleteButton}</div>`;
+
+        if (isAdmin) {
+            table.innerHTML += `<tr>
+                <td><strong>${safeText(getShiftUser(shift))}</strong></td>
+                <td>${safeText(shift.date)}</td>
+                <td>${safeText(shift.startTime)}</td>
+                <td>${safeText(shift.endTime)}</td>
+                <td><strong>${hDisplay}</strong></td>
+                <td>${safeText(shift.note) || "—"}</td>
+                <td>${statusBadge(status)}</td>
+                <td>${actions}</td>
+            </tr>`;
+        } else {
+            table.innerHTML += `<tr>
+                <td>${safeText(shift.date)}</td>
+                <td>${safeText(shift.startTime)}</td>
+                <td>${safeText(shift.endTime)}</td>
+                <td><strong>${hDisplay}</strong></td>
+                <td>${safeText(shift.note) || "—"}</td>
+                <td>${statusBadge(status)}</td>
+                <td><div class="action-group">${deleteButton}</div></td>
+            </tr>`;
+        }
+    });
+
+    if (shiftsData.length === 0) {
+        const colspan = isAdmin ? 8 : 7;
+        table.innerHTML = `<tr><td colspan="${colspan}" style="text-align:center;color:#aaa;padding:20px;">No shift requests yet.</td></tr>`;
+    }
+
+    document.getElementById("totalHours").innerText = formatHours(totalMins);
+}
+
+function renderApprovedSchedule() {
+    const table = document.getElementById("approvedScheduleTable");
+    const head = document.getElementById("approvedScheduleHead");
+    if (!table || !head) return;
+
+    const approved = shiftsData.filter(s => normalizeStatus(s.status) === "approved");
+
+    if (isAdmin) {
+        head.innerHTML = `<tr>
+            <th>${t("colUser","User")}</th>
+            <th>${t("colDate","Date")}</th>
+            <th>${t("startLabel","Start")}</th>
+            <th>${t("endLabel","End")}</th>
+            <th>${t("colStatus","Status")}</th>
+        </tr>`;
+    } else {
+        head.innerHTML = `<tr>
+            <th>${t("colDate","Date")}</th>
+            <th>${t("startLabel","Start")}</th>
+            <th>${t("endLabel","End")}</th>
+            <th>${t("colStatus","Status")}</th>
+        </tr>`;
+    }
+
+    table.innerHTML = "";
+    if (approved.length === 0) {
+        table.innerHTML = `<tr><td colspan="${isAdmin ? 5 : 4}" style="text-align:center;color:#aaa;padding:20px;">No approved schedule yet.</td></tr>`;
+        return;
+    }
+
+    approved.forEach(shift => {
+        if (isAdmin) {
+            table.innerHTML += `<tr>
+                <td><strong>${safeText(getShiftUser(shift))}</strong></td>
+                <td>${safeText(shift.date)}</td>
+                <td>${safeText(shift.startTime)}</td>
+                <td>${safeText(shift.endTime)}</td>
+                <td>${statusBadge("approved")}</td>
+            </tr>`;
+        } else {
+            table.innerHTML += `<tr>
+                <td>${safeText(shift.date)}</td>
+                <td>${safeText(shift.startTime)}</td>
+                <td>${safeText(shift.endTime)}</td>
+                <td>${statusBadge("approved")}</td>
+            </tr>`;
+        }
+    });
+}
+
+/* ── ADD SHIFT ── */
+function addShift() {
+    const dateVal = document.getElementById("date").value;
+    const startVal = document.getElementById("startTime").value;
+    const endVal = document.getElementById("endTime").value;
+    const noteVal = document.getElementById("note").value;
+
+    if (!dateVal || !startVal || !endVal) {
+        alert("Please fill in date, start time and end time.");
+        return;
+    }
+    if (calcHours(startVal, endVal) <= 0) {
+        alert("End time must be after start time.");
+        return;
+    }
+
+    const shift = {
+        employeeName: username,
+        date: dateVal,
+        startTime: startVal,
+        endTime: endVal,
+        note: noteVal,
+        username: username,
+        status: "pending"
+    };
+
+    fetch("http://localhost:8081/shifts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(shift)
+    })
+        .then(res => res.json())
+        .then(() => { clearForm(); loadShifts(); })
+        .catch(() => {
+            shiftsData.push({ id: Date.now(), ...shift });
+            saveDemoShifts();
+            clearForm();
+            renderShifts();
+            renderApprovedSchedule();
+        });
+}
+
+/* ── UPDATE SHIFT ── */
+function updateShift(id, changes) {
+    const oldShift = shiftsData.find(s => s.id === id);
+    if (!oldShift) return;
+
+    const updatedShift = {
+        ...oldShift,
+        ...changes,
+        username: oldShift.username || oldShift.employeeName || getShiftUser(oldShift),
+        employeeName: oldShift.employeeName || oldShift.username || getShiftUser(oldShift)
+    };
+
+    fetch(`http://localhost:8081/shifts/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedShift)
+    })
+        .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+        .then(savedShift => {
+            shiftsData = shiftsData.map(s => s.id === id ? savedShift : s);
+            renderShifts();
+            renderApprovedSchedule();
+        })
+        .catch(() => {
+            shiftsData = shiftsData.map(s => s.id === id ? updatedShift : s);
+            saveDemoShifts();
+            renderShifts();
+            renderApprovedSchedule();
+        });
+}
+
+function approveShift(id) {
+    if (!isAdmin) { alert("Only admin can approve shifts."); return; }
+    updateShift(id, { status: "approved" });
+}
+
+function editShift(id) {
+    if (!isAdmin) { alert("Only admin can edit employee shifts."); return; }
+    const shift = shiftsData.find(s => s.id === id);
+    if (!shift) return;
+
+    document.getElementById("editShiftId").value = shift.id;
+    document.getElementById("editEmployee").value = getShiftUser(shift);
+    document.getElementById("editDate").value = shift.date || "";
+    document.getElementById("editStartTime").value = shift.startTime || "";
+    document.getElementById("editEndTime").value = shift.endTime || "";
+    document.getElementById("editNote").value = shift.note || "";
+
+    document.getElementById("editShiftBox").classList.add("open");
+    document.getElementById("editShiftBox").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function cancelEditShift() {
+    ["editShiftId","editEmployee","editDate","editStartTime","editEndTime","editNote"]
+        .forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
+    document.getElementById("editShiftBox").classList.remove("open");
+}
+
+function saveEditedShift() {
+    const id = Number(document.getElementById("editShiftId").value);
+    const newDate = document.getElementById("editDate").value;
+    const newStart = document.getElementById("editStartTime").value;
+    const newEnd = document.getElementById("editEndTime").value;
+    const newNote = document.getElementById("editNote").value;
+
+    if (!newDate || !newStart || !newEnd) {
+        alert("Date, start time and end time are required.");
+        return;
+    }
+    if (calcHours(newStart, newEnd) <= 0) {
+        alert("End time must be after start time.");
+        return;
+    }
+
+    updateShift(id, { date: newDate, startTime: newStart, endTime: newEnd, note: newNote });
+    cancelEditShift();
+}
+
+/* ── DELETE SHIFT ── */
+function deleteShift(id) {
+    if (!confirm("Delete this shift?")) return;
+    fetch(`http://localhost:8081/shifts/${id}`, { method: "DELETE" })
+        .then(() => loadShifts())
+        .catch(() => {
+            shiftsData = shiftsData.filter(s => s.id !== id);
+            saveDemoShifts();
+            renderShifts();
+            renderApprovedSchedule();
+        });
+}
+
+function clearForm() {
+    ["date","startTime","endTime","note"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
+}
+
+/* ── MESSAGES ── */
+const adminAccount = "admin";
+let activeChatUser = isAdmin ? "" : adminAccount;
+
+if (isAdmin) {
+    document.getElementById("adminChatSelector").style.display = "block";
+}
+
+function messageSenderName(message) {
+    return message.sender === username || (isAdmin && message.sender === adminAccount) ? "You" : message.sender;
+}
+
+function getChatPartner() {
+    return isAdmin ? activeChatUser : adminAccount;
+}
+
+function renderMessages(messages) {
+    const chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML = "";
+
+    if (!messages.length) {
+        chatBox.innerHTML = `<div class="message-admin"><div class="sender">System</div><div class="bubble">No messages yet.</div></div>`;
+        return;
+    }
+
+    messages.forEach(message => {
+        const mine = message.sender === username || (isAdmin && message.sender === adminAccount);
+        chatBox.innerHTML += `
+            <div class="${mine ? "message-user" : "message-admin"}">
+                <div class="sender">${safeText(messageSenderName(message))}</div>
+                <div class="bubble">${safeText(message.content)}</div>
+            </div>`;
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function loadMessageUsers() {
+    if (!isAdmin) return;
+    fetch(`http://localhost:8081/messages/users?admin=${encodeURIComponent(adminAccount)}`)
+        .then(res => res.json())
+        .then(users => {
+            const select = document.getElementById("chatUserSelect");
+            const current = select.value;
+            select.innerHTML = `<option value="">${t("selectEmployeePlaceholder","Choose employee...")}</option>`;
+            users.forEach(user => {
+                select.innerHTML += `<option value="${safeText(user)}">${safeText(user)}</option>`;
+            });
+            if (current && users.includes(current)) {
+                select.value = current;
+            } else if (!activeChatUser && users.length) {
+                activeChatUser = users[0];
+                select.value = activeChatUser;
+                loadMessages();
+            }
+        })
+        .catch(() => {});
+}
+
+function selectChatUser(user) {
+    activeChatUser = user;
+    loadMessages();
+}
+
+function loadMessages() {
+    const partner = getChatPartner();
+    if (isAdmin && !partner) { renderMessages([]); return; }
+
+    fetch(`http://localhost:8081/messages/conversation?user1=${encodeURIComponent(adminAccount)}&user2=${encodeURIComponent(isAdmin ? partner : username)}`)
+        .then(res => res.json())
+        .then(messages => {
+            renderMessages(Array.isArray(messages) ? messages : []);
+            markMessagesRead();
+        })
+        .catch(() => renderMessages([]));
+}
+
+function openMessages() {
+    if (isAdmin) loadMessageUsers();
+    loadMessages();
+}
+
+function sendMessage() {
+    const input = document.getElementById("messageInput");
+    const text = input.value.trim();
+    const partner = getChatPartner();
+
+    if (!text) return;
+    if (isAdmin && !partner) { alert("Please choose an employee first."); return; }
+
+    const message = {
+        sender: isAdmin ? adminAccount : username,
+        receiver: isAdmin ? partner : adminAccount,
+        content: text
+    };
+
+    fetch("http://localhost:8081/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+    })
+        .then(res => res.json())
+        .then(() => {
+            input.value = "";
+            loadMessages();
+            updateUnreadDot();
+            if (isAdmin) loadMessageUsers();
+        })
+        .catch(() => {
+            input.value = "";
+            renderMessages([message]);
+        });
+}
+
+function updateUnreadDot() {
+    fetch(`http://localhost:8081/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+        .then(res => res.json())
+        .then(count => {
+            document.getElementById("notifDot").style.display = Number(count) > 0 ? "block" : "none";
+        })
+        .catch(() => {});
+}
+
+function markMessagesRead() {
+    const partner = getChatPartner();
+    if (isAdmin && !partner) return;
+    fetch(`http://localhost:8081/messages/read?username=${encodeURIComponent(isAdmin ? adminAccount : username)}&sender=${encodeURIComponent(isAdmin ? partner : adminAccount)}`, {
+        method: "PUT"
+    })
+        .then(() => updateUnreadDot())
+        .catch(() => {});
+}
+
+/* ── NOTIFICATIONS ── */
+let notifications = [];
+const readNotificationIds = new Set(JSON.parse(localStorage.getItem("readNotifications") || "[]"));
+
+function saveReadNotifications() {
+    localStorage.setItem("readNotifications", JSON.stringify([...readNotificationIds]));
+}
+
+function timeAgo(dateStr) {
+    if (!dateStr) return "Recently";
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "Just now";
+    if (mins < 60) return `${mins} minute${mins > 1 ? "s" : ""} ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+}
+
+function formatNotificationTime(dateStr) {
+    if (!dateStr) return "Recently";
+    const d = new Date(dateStr);
+    if (Number.isNaN(d.getTime())) return "Recently";
+    return `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+}
+
+function renderNotifications() {
+    const list = document.getElementById("notifList");
+    if (!list) return;
+
+    if (!notifications.length) {
+        list.innerHTML = `<div style="color:#aaa;font-size:14px;text-align:center;padding:20px;">No notifications yet.</div>`;
+        return;
+    }
+
+    notifications.sort((a, b) => {
+        if (a.read !== b.read) return a.read ? 1 : -1;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    list.innerHTML = notifications.map(n => `
+        <div onclick="openNotification('${safeText(n.id)}')"
+            style="display:flex;gap:14px;align-items:flex-start;padding:14px;
+            background:${n.read ? "#fff" : "#eff6ff"};border-radius:12px;
+            border-left:3px solid ${n.color};cursor:pointer;
+            box-shadow:${n.read ? "none" : "0 1px 6px rgba(59,130,246,.12)"};">
+            <div style="width:10px;height:10px;border-radius:50%;background:${n.color};margin-top:5px;flex-shrink:0;"></div>
+            <div style="flex:1;">
+                <div style="font-size:14px;font-weight:600;color:#1f2937;">${safeText(n.title)}</div>
+                <div style="font-size:13px;color:#777;margin-top:2px;">${safeText(n.body)}</div>
+                <div style="font-size:12px;color:#aaa;margin-top:4px;">${safeText(n.time)} · ${safeText(formatNotificationTime(n.createdAt))}</div>
+            </div>
+        </div>`).join("");
+}
+
+function openNotification(id) {
+    const notification = notifications.find(n => n.id === id);
+    if (!notification) return;
+    readNotificationIds.add(id);
+    saveReadNotifications();
+    notification.read = true;
+    renderNotifications();
+    if (notification.target === "messages") { showPanel("messages"); return; }
+    if (notification.target === "schedule") { showPanel("schedule"); return; }
+    showPanel("dashboard");
+}
+
+function buildNotifications() {
+    const now = new Date().toISOString();
+    notifications = [];
+
+    if (!isAdmin) {
+        const approved = shiftsData.filter(s => normalizeStatus(s.status) === "approved");
+        approved.forEach(shift => {
+            const id = "shift-" + shift.id;
+            const createdAt = shift.updatedAt || shift.createdAt || now;
+            notifications.push({
+                id, title: "Shift approved",
+                body: `Your shift on ${shift.date} (${shift.startTime} - ${shift.endTime}) has been approved by admin.`,
+                color: "#22c55e", time: timeAgo(createdAt), createdAt,
+                read: readNotificationIds.has(id), target: "schedule"
+            });
+        });
+    }
+
+    if (isAdmin) {
+        const pending = shiftsData.filter(s => normalizeStatus(s.status) === "pending");
+        if (pending.length > 0) {
+            const id = "pending-shifts";
+            notifications.push({
+                id, title: `${pending.length} pending shift request(s)`,
+                body: "Employees are waiting for shift approval.",
+                color: "#f59e0b", time: timeAgo(now), createdAt: now,
+                read: readNotificationIds.has(id), target: "dashboard"
+            });
+        }
+    }
+
+    fetch(`http://localhost:8081/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+        .then(res => res.json())
+        .then(count => {
+            if (Number(count) > 0) {
+                const id = "unread-msg";
+                notifications.unshift({
+                    id, title: "New message",
+                    body: isAdmin
+                        ? `You have ${count} unread message(s) from employee(s).`
+                        : `You have ${count} unread message(s) from your manager.`,
+                    color: "#3b82f6", time: timeAgo(now), createdAt: now,
+                    read: readNotificationIds.has(id), target: "messages"
+                });
+            }
+            renderNotifications();
+        })
+        .catch(() => renderNotifications());
+}
+
+/* ══════════════════════════════════════
+   LANGUAGE SYSTEM
+══════════════════════════════════════ */
+let translations = {};
+let currentLang = localStorage.getItem("language") || "en";
+let _langLoading = false; /* chặn load đồng thời */
+
+async function loadLanguage(lang) {
+    if (_langLoading) return;
+    _langLoading = true;
+    try {
+        const res = await fetch(`/i18n/${lang}.json?t=${Date.now()}`);
+        if (!res.ok) throw new Error("File not found: " + lang);
+        translations = await res.json();
+        currentLang = lang;
+        applyLanguage();
+        /* Re-render table để cập nhật headers + status + button labels */
+        renderShifts();
+        renderApprovedSchedule();
+    } catch (err) {
+        console.error("loadLanguage error:", err);
+    } finally {
+        _langLoading = false;
+    }
+}
+
+function applyLanguage() {
+    const lang = currentLang;
+
+    /* 1. [data-i18n] — innerText */
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+
+        /* Admin override: dùng text khác cho một số element */
+        if (isAdmin && adminTextOverrides[el.id]) {
+            el.textContent = adminTextOverrides[el.id][lang]
+                           || adminTextOverrides[el.id]["en"];
+            return;
+        }
+
+        /* <option> dùng textContent bình thường */
+        if (translations[key] !== undefined) {
+            el.textContent = translations[key];
+        }
+    });
+
+    /* 2. [data-i18n-placeholder] — placeholder attribute */
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (translations[key] !== undefined) {
+            el.placeholder = translations[key];
+        }
+    });
+
+    /* 3. <html lang=""> */
+    document.documentElement.lang = lang;
+
+    /* 4. Sync languageSelect UI */
+    const sel = document.getElementById("languageSelect");
+    if (sel && sel.value !== lang) sel.value = lang;
+}
+
+function changeLanguage(lang) {
+    if (!lang) return;
+    localStorage.setItem("language", lang);
+    loadLanguage(lang);
+}
+
+function initLanguage() {
+    const lang = localStorage.getItem("language") || "en";
+    return loadLanguage(lang); /* return Promise */
+}
+
+/* ── SETTINGS ── */
+function getStoredProfile() {
+    return JSON.parse(localStorage.getItem("profile_" + username) || "{}");
+}
+function saveStoredProfile(profile) {
+    localStorage.setItem("profile_" + username, JSON.stringify(profile));
+}
+
+function loadSettings() {
+    const profile = getStoredProfile();
+    const prefs = JSON.parse(localStorage.getItem("prefs_" + username) || "{}");
+    const lang = prefs.language || currentLang || "en";
+
+    const fullName = document.getElementById("settingFullName");
+    const email = document.getElementById("settingEmail");
+    const phone = document.getElementById("settingPhone");
+    const langSelect = document.getElementById("languageSelect");
+    const emailNotif = document.getElementById("emailNotifications");
+    const shiftRemind = document.getElementById("shiftReminders");
+
+    if (fullName) fullName.value = profile.fullName || "";
+    if (email) email.value = profile.email || "";
+    if (phone) phone.value = profile.phone || "";
+    if (langSelect) langSelect.value = lang;
+    if (emailNotif) emailNotif.checked = prefs.emailNotifications !== false;
+    if (shiftRemind) shiftRemind.checked = prefs.shiftReminders !== false;
+
+    /* Chỉ fetch profile — KHÔNG gọi changeLanguage ở đây, initLanguage đã lo */
+    fetch(`http://localhost:8081/users/profile?username=${encodeURIComponent(username)}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+            if (!data) return;
+            if (fullName) fullName.value = data.fullName || "";
+            if (email) email.value = data.email || "";
+            if (phone) phone.value = data.phone || "";
+            /* Chỉ sync select UI, không load lại language */
+            if (data.language && langSelect) langSelect.value = data.language;
+            if (emailNotif) emailNotif.checked = data.emailNotifications !== false;
+            if (shiftRemind) shiftRemind.checked = data.shiftReminders !== false;
+        })
+        .catch(err => console.warn("Profile fetch failed:", err));
+}
+
+function saveProfile() {
+    const profile = {
+        username,
+        fullName: document.getElementById("settingFullName")?.value.trim(),
+        email: document.getElementById("settingEmail")?.value.trim(),
+        phone: document.getElementById("settingPhone")?.value.trim()
+    };
+
+    if (profile.email && !profile.email.includes("@")) {
+        alert("Please enter a valid email.");
+        return;
+    }
+
+    fetch("http://localhost:8081/users/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile)
+    })
+        .then(res => res.ok ? res.json() : null)
+        .then(data => { if (data) saveStoredProfile(data); alert("Profile saved."); })
+        .catch(() => { saveStoredProfile(profile); alert("Saved locally (backend unavailable)."); });
+}
+
+function changePassword() {
+    const currentPassword = document.getElementById("currentPassword")?.value;
+    const newPassword = document.getElementById("newPassword")?.value;
+    const confirmPassword = document.getElementById("confirmPassword")?.value;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        alert("Please fill in all password fields."); return;
+    }
+    if (newPassword.length < 4) { alert("Password must be at least 4 characters."); return; }
+    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
+
+    fetch("http://localhost:8081/users/password", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, currentPassword, newPassword })
+    })
+        .then(res => res.text())
+        .then(msg => {
+            alert(msg);
+            if (msg.toLowerCase().includes("success")) {
+                ["currentPassword","newPassword","confirmPassword"].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = "";
+                });
+            }
+        })
+        .catch(() => alert("Password API not available."));
+}
+
+function savePreferences() {
+    const prefs = {
+        username,
+        language: document.getElementById("languageSelect")?.value,
+        emailNotifications: document.getElementById("emailNotifications")?.checked,
+        shiftReminders: document.getElementById("shiftReminders")?.checked
+    };
+
+    localStorage.setItem("prefs_" + username, JSON.stringify(prefs));
+    localStorage.setItem("language", prefs.language);
+    changeLanguage(prefs.language);
+
+    fetch("http://localhost:8081/users/preferences", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(prefs)
+    })
+        .then(res => res.ok ? res.json() : null)
+        .then(() => alert("Preferences saved."))
+        .catch(() => alert("Saved locally (backend unavailable)."));
+}
+
+function logout() {
+    if (!confirm("Are you sure you want to logout?")) return;
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+
+/* ── STATUS CSS (cần có trong style.css, thêm fallback ở đây) ── */
+const statusStyle = document.createElement("style");
+statusStyle.textContent = `
+    .status-approved {
+        background: #dcfce7; color: #15803d;
+        padding: 4px 10px; border-radius: 20px;
+        font-size: 12px; font-weight: 700;
+        display: inline-block; white-space: nowrap;
+    }
+    .status-pending {
+        background: #fef9c3; color: #a16207;
+        padding: 4px 10px; border-radius: 20px;
+        font-size: 12px; font-weight: 700;
+        display: inline-block; white-space: nowrap;
+    }
+    .edit-panel { display: none; }
+    .edit-panel.open { display: block; }
+`;
+document.head.appendChild(statusStyle);
+
+/* ── INIT ── */
+document.addEventListener("DOMContentLoaded", async () => {
+    const mi = document.getElementById("messageInput");
+    if (mi) mi.addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
+
+    updateUnreadDot();
+    setInterval(updateUnreadDot, 10000);
+
+    /* Load ngôn ngữ TRƯỚC — đợi xong mới render data */
+    await initLanguage();
+
+    /* Sau khi có translations mới load và render data */
+    loadShifts();
+    loadSettings();
+});
+</script>
+</body>
+</html>

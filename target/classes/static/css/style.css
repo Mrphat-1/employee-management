@@ -1,0 +1,1034 @@
+/* =========================
+   ROOT VARIABLES
+========================= */
+:root {
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --surface2: #f8f7f4;
+    --border: #e8e4dd;
+    --border2: #f0ece6;
+
+    --accent: #b8860b;
+    --accent-light: #d4a832;
+    --accent-muted: rgba(184, 134, 11, 0.1);
+
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --muted2: #9ca3af;
+
+    --topbar-bg: rgba(245, 243, 239, 0.95);
+
+    --drawer-bg: #2c3e50;
+    --drawer-bg2: #1a252f;
+
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BASE
+========================= */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%; /* Ngăn iOS tự zoom font */
+}
+
+body {
+    background: var(--bg);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden; /* FIX: ngăn horizontal scroll toàn trang */
+    line-height: 1.5;
+}
+
+/* Background dot pattern */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: radial-gradient(circle, rgba(184, 134, 11, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black, transparent); /* FIX: Safari */
+}
+
+/* =========================
+   OVERLAY
+========================= */
+#overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px); /* FIX: Safari */
+    z-index: 200;
+    /* FIX: thêm transition mượt */
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+#overlay.open {
+    display: block;
+    opacity: 1;
+}
+
+/* =========================
+   DRAWER
+========================= */
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: linear-gradient(160deg, var(--drawer-bg), var(--drawer-bg2));
+    z-index: 300;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.15);
+    /* FIX: overscroll cho drawer */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    flex-shrink: 0; /* FIX: không bị co khi scroll */
+}
+
+.drawer-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), transparent);
+}
+
+.logo {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.2px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    line-height: 1;
+    transition: color 0.15s, background 0.15s;
+    border-radius: var(--radius-sm);
+    /* FIX: touch target tối thiểu 44px */
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.drawer-user {
+    margin: 16px 12px 0;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    /* FIX: tránh bị co méo */
+    aspect-ratio: 1;
+}
+
+.user-meta .role-tag {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.user-meta .uname {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    /* FIX: tên dài không tràn */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+}
+
+.drawer-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 12px 0;
+    /* FIX: smooth scroll iOS */
+    -webkit-overflow-scrolling: touch;
+}
+
+.menu-section {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 8px;
+    margin: 18px 0 6px;
+    /* FIX: lần đầu không có margin trên */
+}
+
+.menu-section:first-child {
+    margin-top: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    margin-bottom: 2px;
+    /* FIX: border transparent để không bị nhảy layout khi active */
+    border: 1px solid transparent;
+}
+
+.menu-item svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none; /* FIX: đảm bảo SVG không bị fill màu lạ */
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.menu-item.active {
+    background: rgba(184, 134, 11, 0.2);
+    border-color: rgba(184, 134, 11, 0.3);
+    color: var(--accent-light);
+}
+
+/* =========================
+   DRAWER FOOTER
+========================= */
+.drawer-footer {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.logout-btn {
+    width: 100%;
+    background: rgba(220, 38, 38, 0.15);
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    color: #fca5a5;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.logout-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+}
+
+.logout-btn:hover {
+    background: rgba(220, 38, 38, 0.25);
+    border-color: rgba(220, 38, 38, 0.4);
+}
+
+/* =========================
+   TOPBAR
+========================= */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--topbar-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* FIX: Safari */
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: background 0.15s;
+    /* FIX: touch target */
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger:hover {
+    background: var(--accent-muted);
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--muted);
+    border-radius: 2px;
+    transition: background 0.15s;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notif-btn {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+    flex-shrink: 0;
+}
+
+.notif-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--muted);
+    fill: none;
+}
+
+.notif-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-muted);
+}
+
+.notif-dot {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: var(--danger);
+    border-radius: 50%;
+    /* FIX: border trắng để tách khỏi nền */
+    border: 1.5px solid var(--surface);
+}
+
+.user-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 12px 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    /* FIX: tên dài không vỡ layout */
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.mini-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    aspect-ratio: 1;
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+.main {
+    padding: 28px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   PANELS
+========================= */
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+    /* FIX: animation masuk panel */
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-heading {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    /* FIX: không bị wrap aneh */
+    line-height: 1.3;
+}
+
+.page-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+/* =========================
+   STATS CARDS
+========================= */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.stats-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), transparent);
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stats-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.stats-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--accent);
+    fill: none;
+}
+
+.stats-title {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.stats-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+/* =========================
+   CARD BOX
+========================= */
+.card-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 18px;
+    position: relative;
+    /* FIX: hapus overflow:hidden supaya table-responsive bisa scroll */
+    overflow: visible;
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+}
+
+.section-title svg {
+    width: 17px;
+    height: 17px;
+    stroke: var(--accent);
+    fill: none;
+    flex-shrink: 0;
+}
+
+/* =========================
+   EDIT PANEL
+   FIX: definisi yang hilang di style.css asli
+========================= */
+.edit-panel {
+    display: none;
+}
+
+.edit-panel.open {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+/* =========================
+   STATUS BADGES
+   FIX: tidak ada di style.css asli sama sekali
+========================= */
+.status-approved {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-pending {
+    display: inline-block;
+    background: #fef9c3;
+    color: #a16207;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* =========================
+   FORM CONTROLS
+========================= */
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-control,
+select,
+textarea {
+    width: 100%;
+    height: 46px;
+    border-radius: var(--radius-sm) !important;
+    border: 1.5px solid var(--border) !important;
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 14px;
+    padding: 0 12px !important;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    /* FIX: font family konsisten */
+    font-family: inherit;
+    /* FIX: appearance untuk select di Safari */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+textarea {
+    height: auto !important;
+    min-height: 100px;
+    padding: 12px !important;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.form-control:focus,
+select:focus,
+textarea:focus {
+    border-color: rgba(184, 134, 11, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.08) !important;
+    background: #fff;
+}
+
+/* FIX: select arrow custom */
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px !important;
+    cursor: pointer;
+}
+
+/* FIX: disabled input */
+.form-control:disabled,
+input:disabled {
+    background: var(--surface2);
+    color: var(--muted2);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn-save {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    font-family: inherit;
+    /* FIX: touch target */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.btn-save:hover {
+    opacity: 0.9;
+}
+
+.btn-save:active {
+    transform: scale(0.98);
+}
+
+.btn-delete {
+    background: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-family: inherit;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* Action buttons (trong table) */
+.btn-action {
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    font-family: inherit;
+    white-space: nowrap;
+    /* FIX: touch target minimal */
+    min-height: 30px;
+}
+
+.btn-action:hover {
+    opacity: 0.85;
+}
+
+.btn-action:active {
+    transform: scale(0.96);
+}
+
+.btn-action.accept {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.btn-action.edit {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.btn-action.delete {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    -webkit-overflow-scrolling: touch;
+    /* FIX: scroll bar lebih rapi di desktop */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+/* FIX: reset display table — KHÔNG override dengan display:block */
+.table {
+    width: 100% !important;
+    min-width: 600px;
+    margin: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    color: var(--text);
+    background: var(--surface);
+    /* FIX: hapus display:table karena sudah default */
+}
+
+/* FIX: pastikan thead/tbody render normal */
+.table thead {
+    background: var(--surface2);
+}
+
+.table thead th {
+    background: var(--surface2) !important;
+    color: var(--muted2);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    vertical-align: middle;
+    /* FIX: sticky header */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table tbody tr {
+    background: #fff;
+    transition: background 0.12s;
+}
+
+.table tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border2);
+    vertical-align: middle;
+    background: inherit; /* FIX: ikut warna row parent */
+    white-space: nowrap;
+}
+
+/* Hover */
+.table-hover tbody tr:hover {
+    background: var(--surface2);
+}
+
+/* Last row no border */
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Striped */
+.table-striped tbody tr:nth-child(even) {
+    background: #fcfbf9;
+}
+
+/* Action group */
+.action-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* =========================
+   CHAT
+========================= */
+#chatBox {
+    height: 280px;
+    overflow-y: auto;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    background: var(--surface2);
+    margin-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.message-admin,
+.message-user {
+    margin-bottom: 12px;
+}
+
+.sender {
+    font-size: 11px;
+    color: var(--muted2);
+    margin-bottom: 4px;
+}
+
+.bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    display: inline-block;
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word; /* FIX: pesan panjang tidak overflow */
+}
+
+.message-admin .bubble {
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-bottom-left-radius: 4px; /* FIX: chat bubble shape */
+}
+
+.message-user {
+    text-align: right;
+}
+
+.message-user .bubble {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff;
+    border-bottom-right-radius: 4px; /* FIX: chat bubble shape */
+}
+
+/* =========================
+   GLOBAL TABLE RESET
+   FIX: hilangkan override yang berlebihan
+   (versi asli pakai !important berlebihan)
+========================= */
+table {
+    border-collapse: collapse;
+}
+
+/* =========================
+   SCROLLBAR GLOBAL (opsional, hanya Webkit)
+========================= */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+/* =========================
+   UTILITY
+========================= */
+.hide-mobile {
+    /* definisi di sini, override di mobile.css */
+}
+
+.text-muted {
+    color: var(--muted);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =========================
+   RESPONSIVE DESKTOP (max 768)
+========================= */
+@media (max-width: 768px) {
+    .main {
+        padding: 16px 14px;
+    }
+
+    .topbar {
+        padding: 0 14px;
+        height: 58px;
+    }
+
+    .page-heading {
+        font-size: 22px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .card-box {
+        padding: 16px;
+    }
+
+    .drawer {
+        width: 260px;
+    }
+
+    .user-pill span {
+        display: none;
+    }
+
+    #chatBox {
+        height: 220px;
+    }
+
+    /* FIX: tabel hanya perlu min-width lebih kecil di mobile */
+    .table {
+        min-width: 500px;
+    }
+
+    .table thead th {
+        font-size: 11px;
+        padding: 12px 12px;
+    }
+
+    .table tbody td {
+        font-size: 13px;
+        padding: 12px 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 12px;
+    }
+}
