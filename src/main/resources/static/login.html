@@ -304,7 +304,7 @@ function login(){
     if(!username){showError("Please enter your username.");return;}
     if(!password){showError("Please enter your password.");return;}
     setLoading(true);
-    fetch("https://employee-management-218m.onrender.com/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})})
+    fetch("https://employee-management-1-iw92.onrender.com/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})})
     .then(r=>r.json())
     .then(data=>{
         if(data.message==="Login success"){
