@@ -1224,7 +1224,7 @@ function saveEditedShift() {
 /* ── DELETE SHIFT ── */
 function deleteShift(id) {
     if (!confirm("Delete this shift?")) return;
-    fetch(`https://employee-management-218m.onrender.com/shifts/${id}`, { method: "DELETE" })
+    fetch(`https://employee-management-1-iw92.onrender.com/shifts/${id}`, { method: "DELETE" })
         .then(() => loadShifts())
         .catch(() => {
             shiftsData = shiftsData.filter(s => s.id !== id);
@@ -1280,7 +1280,7 @@ function renderMessages(messages) {
  
 function loadMessageUsers() {
     if (!isAdmin) return;
-    fetch(`https://employee-management-218m.onrender.com/messages/users?admin=${encodeURIComponent(adminAccount)}`)
+    fetch(`https://employee-management-1-iw92.onrender.com/messages/users?admin=${encodeURIComponent(adminAccount)}`)
         .then(res => res.json())
         .then(users => {
             const select = document.getElementById("chatUserSelect");
@@ -1309,7 +1309,7 @@ function loadMessages() {
     const partner = getChatPartner();
     if (isAdmin && !partner) { renderMessages([]); return; }
  
-    fetch(`https://employee-management-218m.onrender.com/messages/conversation?user1=${encodeURIComponent(adminAccount)}&user2=${encodeURIComponent(isAdmin ? partner : username)}`)
+    fetch(`https://employee-management-1-iw92.onrender.com/messages/conversation?user1=${encodeURIComponent(adminAccount)}&user2=${encodeURIComponent(isAdmin ? partner : username)}`)
         .then(res => res.json())
         .then(messages => {
             renderMessages(Array.isArray(messages) ? messages : []);
@@ -1337,7 +1337,7 @@ function sendMessage() {
         content: text
     };
  
-    fetch("https://employee-management-218m.onrender.com/messages", {
+    fetch("https://employee-management-1-iw92.onrender.com/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(message)
@@ -1356,7 +1356,7 @@ function sendMessage() {
 }
  
 function updateUnreadDot() {
-    fetch(`https://employee-management-218m.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+    fetch(`https://employee-management-1-iw92.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
         .then(res => res.json())
         .then(count => {
             document.getElementById("notifDot").style.display = Number(count) > 0 ? "block" : "none";
@@ -1367,7 +1367,7 @@ function updateUnreadDot() {
 function markMessagesRead() {
     const partner = getChatPartner();
     if (isAdmin && !partner) return;
-    fetch(`https://employee-management-218m.onrender.com/messages/read?username=${encodeURIComponent(isAdmin ? adminAccount : username)}&sender=${encodeURIComponent(isAdmin ? partner : adminAccount)}`, {
+    fetch(`https://employee-management-1-iw92.onrender.com/messages/read?username=${encodeURIComponent(isAdmin ? adminAccount : username)}&sender=${encodeURIComponent(isAdmin ? partner : adminAccount)}`, {
         method: "PUT"
     })
         .then(() => updateUnreadDot())
@@ -1473,7 +1473,7 @@ function buildNotifications() {
         }
     }
  
-    fetch(`https://employee-management-218m.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
+    fetch(`https://employee-management-1-iw92.onrender.com/messages/unread-count?username=${encodeURIComponent(isAdmin ? adminAccount : username)}`)
         .then(res => res.json())
         .then(count => {
             if (Number(count) > 0) {
@@ -1593,7 +1593,7 @@ function loadSettings() {
     if (shiftRemind) shiftRemind.checked = prefs.shiftReminders !== false;
  
     /* Chỉ fetch profile — KHÔNG gọi changeLanguage ở đây, initLanguage đã lo */
-    fetch(`https://employee-management-218m.onrender.com/users/profile?username=${encodeURIComponent(username)}`)
+    fetch(`https://employee-management-1-iw92.onrender.com/users/profile?username=${encodeURIComponent(username)}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
             if (!data) return;
@@ -1621,7 +1621,7 @@ function saveProfile() {
         return;
     }
  
-    fetch("https://employee-management-218m.onrender.com/users/profile", {
+    fetch("https://employee-management-1-iw92.onrender.com/users/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profile)
