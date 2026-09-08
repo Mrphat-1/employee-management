@@ -1127,7 +1127,7 @@ function addShift() {
         status: "pending"
     };
  
-    fetch("https://employee-management-218m.onrender.com/shifts", {
+    fetch("https://employee-management-1-iw92.onrender.com/shifts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shift)
@@ -1155,7 +1155,7 @@ function updateShift(id, changes) {
         employeeName: oldShift.employeeName || oldShift.username || getShiftUser(oldShift)
     };
  
-    fetch(`https://employee-management-218m.onrender.com/shifts/${id}`, {
+    fetch(`https://employee-management-1-iw92.onrender.com/shifts/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedShift)
@@ -1642,7 +1642,7 @@ function changePassword() {
     if (newPassword.length < 4) { alert("Password must be at least 4 characters."); return; }
     if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
  
-    fetch("https://employee-management-218m.onrender.com/users/password", {
+    fetch("https://employee-management-1-iw92.onrender.com/users/password", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, currentPassword, newPassword })
@@ -1672,7 +1672,7 @@ function savePreferences() {
     localStorage.setItem("language", prefs.language);
     changeLanguage(prefs.language);
  
-    fetch("https://employee-management-218m.onrender.com/users/preferences", {
+    fetch("https://employee-management-1-iw92.onrender.com/users/preferences", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(prefs)
